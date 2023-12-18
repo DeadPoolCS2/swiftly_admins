@@ -40,6 +40,16 @@
 
 * After installing the plugin, you need to change the prefix from `addons/swiftly/configs/plugins` (optional) and if you want, you can change the messages from `addons/swiftly/translations`.
 
+### Adding Admins ⚙️
+
+* To add admins on server, you need to add a new row in admin tables set in `addons/swiftly/configs/plugin/admins.json` respecting the following conditions:
+
+```
+steamid => SteamID 64 of the player
+flags => The flags provided below (example: abcd)
+immunity => A number greater or equal than 0
+```
+
 ### Admin Flags 🛡️
 
 * Currently supported flags are the following:
