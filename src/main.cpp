@@ -79,5 +79,5 @@ const char *GetPluginName()
 
 const char *GetPluginWebsite()
 {
-    return "";
+    return "https://github.com/swiftly-solution/swiftly_admins";
 }
