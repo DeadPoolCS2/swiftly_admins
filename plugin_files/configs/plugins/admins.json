@@ -1,0 +1,7 @@
+{
+    "table_name": {
+        "admins": "admins",
+        "sanctions": "sanctions"
+    },
+    "prefix": "{lime}[Swiftly]{default}"
+}

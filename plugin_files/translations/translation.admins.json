@@ -1,0 +1,226 @@
+{
+	"ban.message": {
+		"en": "%s %s banned %s for %s. Reason: %s\n",
+		"ro": "%s %s i-a dat ban lui %s pentru %s. Motiv: %s\n"
+	},
+	"ban.syntax": {
+		"en": "%s Syntax: %sban <player> <days / 0 - permanent> <reason>\n",
+		"ro": "%s Sintaxă: %sban <player> <zile / 0 - permanent> <motiv>\n"
+	},
+	"cannot_use_command": {
+		"en": "%s You don't have access to use this command on that player.\n",
+		"ro": "%s Nu ai acces să folosești această comandă pe acest jucător.\n"
+	},
+	"changemap.syntax": {
+		"en": "%s Syntax: %smap <map>\n",
+		"ro": "%s Sintaxă: %smap <hartă>\n"
+	},
+	"changing_map": {
+		"en": "%s Changing map to '%s'...",
+		"ro": "%s Se schimbă harta în '%s'..."
+	},
+	"chat.admin_chat": {
+		"en": "{green}(Admin Chat) %s{default}: %s\n",
+		"ro": "{green}(Admin Chat) %s{default}: %s\n"
+	},
+	"chat.syntax": {
+		"en": "%s Syntax: %schat <message>\n",
+		"ro": "%s Sintaxă: %schat <mesaj>\n"
+	},
+	"chat.to_admins": {
+		"en": "{green}(To Admins) %s{default}: %s\n",
+		"ro": "{green}(Către Admini) %s{default}: %s\n"
+	},
+	"csay.syntax": {
+		"en": "%s Syntax: %scsay <message>\n",
+		"ro": "%s Sintaxă: %scsay <mesaj>\n"
+	},
+	"days": {
+		"en": "%.2f day(s)",
+		"ro": "%.2f zi(le)"
+	},
+	"forever": {
+		"en": "Forever",
+		"ro": "Pentru totdeauna"
+	},
+	"gag.message": {
+		"en": "%s %s gagged %s for %s. Reason: %s\n",
+		"ro": "%s %s i-a dat gag lui %s pentru %s. Motiv: %s\n"
+	},
+	"gag.syntax": {
+		"en": "%s Syntax: %sgag <player> <minutes / 0 - permanent> <reason>\n",
+		"ro": "%s Sintaxă: %sgag <player> <minute / 0 - permanent> <motiv>\n"
+	},
+	"gag_expired": {
+		"en": "%s Your gag has expired.",
+		"ro": "%s Gag-ul tău a expirat."
+	},
+	"gagged": {
+		"en": "%s You are gagged. Expires in: %s. Reason: %s",
+		"ro": "%s Ai primit gag. Expiră în: %s. Motiv: %s"
+	},
+	"hours": {
+		"en": "%.2f hour(s)",
+		"ro": "%.2f ore"
+	},
+	"invalid_map": {
+		"en": "%s Map '%s' is invalid. Please choose another one.",
+		"ro": "%s Harta '%s' este invalidă. Te rugăm să alegi o altă hartă."
+	},
+	"invalid_player": {
+		"en": "%s Player couldn't be found.\n",
+		"ro": "%s Nu am putut găsi jucătorul.\n"
+	},
+	"invalid_time": {
+		"en": "%s Invalid time. (%d-%d)",
+		"ro": "%s Timp invalid. (%d-%d)"
+	},
+	"kick.message": {
+		"en": "%s %s kicked %s from server. Reason: %s\n",
+		"ro": "%s %s i-a dat kick lui %s de pe server. Motiv: %s\n"
+	},
+	"kick.syntax": {
+		"en": "%s Syntax: %skick <player> <reason>\n",
+		"ro": "%s Sintaxă: %skick <player> <motiv>\n"
+	},
+	"minutes": {
+		"en": "%.2f minute(s)",
+		"ro": "%.2f minut(e)"
+	},
+	"mute.message": {
+		"en": "%s %s muted %s for %s. Reason: %s\n",
+		"ro": "%s %s i-a dat mute lui %s pentru %s. Motiv: %s\n"
+	},
+	"mute.syntax": {
+		"en": "%s Syntax: %smute <player> <minutes / 0 - permanent> <reason>\n",
+		"ro": "%s Sintaxă: %smute <player> <minute / 0 - permanent> <motiv>\n"
+	},
+	"mute_expired": {
+		"en": "%s Your mute has expired.",
+		"ro": "%s Mute-ul tău a expirat."
+	},
+	"muted": {
+		"en": "%s You are muted. Expires in: %s. Reason: %s",
+		"ro": "%s Ai primit mute. Expiră în: %s. Motiv: %s"
+	},
+	"never": {
+		"en": "Never",
+		"ro": "Niciodată"
+	},
+	"no_access": {
+		"en": "%s You don't have access to use this command.\n",
+		"ro": "%s Nu ai acces să folosești această comandă.\n"
+	},
+	"player_already_gagged": {
+		"en": "%s %s is already gagged.\n",
+		"ro": "%s %s are deja gag.\n"
+	},
+	"player_already_gagged_or_muted": {
+		"en": "%s %s is already gagged or muted.\n",
+		"ro": "%s %s are deja gag sau mute.\n"
+	},
+	"player_already_muted": {
+		"en": "%s %s is already muted.\n",
+		"ro": "%s %s are deja mute.\n"
+	},
+	"player_not_connected": {
+		"en": "%s Player #%d is not connected on server.\n",
+		"ro": "%s Jucătorul #%d nu este conectat pe server.\n"
+	},
+	"player_not_gagged": {
+		"en": "%s %s is not gagged.\n",
+		"ro": "%s %s nu are gag.\n"
+	},
+	"player_not_gagged_and_muted": {
+		"en": "%s %s is not gagged and muted.\n",
+		"ro": "%s %s are nu are gag și mute.\n"
+	},
+	"player_not_muted": {
+		"en": "%s %s is not muted.\n",
+		"ro": "%s %s nu are mute.\n"
+	},
+	"player_slayed": {
+		"en": "%s %s slayed %s.\n",
+		"ro": "%s %s l-a omorât pe %s.\n"
+	},
+	"psay.message": {
+		"en": "{green} (Private - Admin) To/From %s{default}: %s\n",
+		"ro": "{green} (Privat - Admin) Către/De la %s{default}: %s\n"
+	},
+	"psay.syntax": {
+		"en": "%s Syntax: %spsay <player> <message>\n",
+		"ro": "%s Sintaxă: %spsay <player> <mesaj>\n"
+	},
+	"rcon.syntax": {
+		"en": "%s Syntax: %srcon <message>\n",
+		"ro": "%s Sintaxă: %srcon <mesaj>\n"
+	},
+	"reloadadmins": {
+		"en": "%s Admins has been succesfully reloaded.\n",
+		"ro": "%s Adminii au fost reîncărcați cu succes.\n"
+	},
+	"say.message": {
+		"en": "{green} (Admin) %s{default}: %s\n",
+		"ro": "{green} (Admin) %s{default}: %s\n"
+	},
+	"say.syntax": {
+		"en": "%s Syntax: %ssay <message>\n",
+		"ro": "%s Sintaxă: %ssay <mesaj>\n"
+	},
+	"seconds": {
+		"en": "%.2f second(s)",
+		"ro": "%.2f secunde"
+	},
+	"silence.message": {
+		"en": "%s %s silenced %s for %s. Reason: %s\n",
+		"ro": "%s %s i-a dat silence lui %s pentru %s. Motiv: %s\n"
+	},
+	"silence.syntax": {
+		"en": "%s Syntax: %ssilence <player> <minutes / 0 - permanent> <reason>\n",
+		"ro": "%s Sintaxă: %ssilence <player> <minute / 0 - permanent> <motiv>\n"
+	},
+	"slap.message": {
+		"en": "%s %s slapped %s.\n",
+		"ro": "%s %s i-a dat slap lui %s.\n"
+	},
+	"slap.syntax": {
+		"en": "%s Syntax: %sslap <player>\n",
+		"ro": "%s Sintaxă: %sslap <player>\n"
+	},
+	"slay.syntax": {
+		"en": "%s Syntax: %sslay <player>\n",
+		"ro": "%s Sintaxă: %sslay <player>\n"
+	},
+	"unban.message": {
+		"en": "%s %s unbanned player with SteamID '%s'.\n",
+		"ro": "%s %s l-a debanat pe jucătorul cu SteamID-ul '%s'.\n"
+	},
+	"unban.syntax": {
+		"en": "%s Syntax: %sunban <steamid>\n",
+		"ro": "%s Sintaxă: %sunban <steamid>\n"
+	},
+	"ungag.message": {
+		"en": "%s %s ungagged %s.\n",
+		"ro": "%s %s i-a dat ungag lui %s.\n"
+	},
+	"ungag.syntax": {
+		"en": "%s Syntax: %sungag <player>\n",
+		"ro": "%s Sintaxă: %sungag <player>\n"
+	},
+	"unmute.message": {
+		"en": "%s %s unmuted %s.\n",
+		"ro": "%s %s i-a dat unmute lui %s.\n"
+	},
+	"unmute.syntax": {
+		"en": "%s Syntax: %sunmute <player>\n",
+		"ro": "%s Sintaxă: %sunmute <player>\n"
+	},
+	"unsilence.message": {
+		"en": "%s %s unsilenced %s.\n",
+		"ro": "%s %s i-a dat unsilence lui %s.\n"
+	},
+	"unsilence.syntax": {
+		"en": "%s Syntax: %sunsilence <player>\n",
+		"ro": "%s Sintaxă: %sunsilence <player>\n"
+	}
+}
