@@ -5,6 +5,30 @@
 #include <swiftly/logger.h>
 #include <set>
 
+static const std::map<int, int> flagsPermissions = {
+    {'a', ADMFLAG_RESERVATION},
+    {'b', ADMFLAG_GENERIC},
+    {'c', ADMFLAG_KICK},
+    {'d', ADMFLAG_BAN},
+    {'e', ADMFLAG_UNBAN},
+    {'f', ADMFLAG_SLAY},
+    {'g', ADMFLAG_CHANGEMAP},
+    {'h', ADMFLAG_CONVARS},
+    {'i', ADMFLAG_CONFIG},
+    {'j', ADMFLAG_CHAT},
+    {'k', ADMFLAG_VOTE},
+    {'l', ADMFLAG_PASSWORD},
+    {'m', ADMFLAG_RCON},
+    {'n', ADMFLAG_CHEATS},
+    {'o', ADMFLAG_CUSTOM1},
+    {'p', ADMFLAG_CUSTOM2},
+    {'q', ADMFLAG_CUSTOM3},
+    {'r', ADMFLAG_CUSTOM4},
+    {'s', ADMFLAG_CUSTOM5},
+    {'t', ADMFLAG_CUSTOM6},
+    {'z', ADMFLAG_ROOT},
+};
+
 int ProcessFlags(std::set<int> giveFlags)
 {
     int flags = 0;
@@ -58,48 +82,8 @@ void LoadAdmins()
 
             for (int i = 0; i < flags.size(); i++)
             {
-                if (flags.at(i) == 'a')
-                    giveFlags.insert(ADMFLAG_RESERVATION);
-                else if (flags.at(i) == 'b')
-                    giveFlags.insert(ADMFLAG_GENERIC);
-                else if (flags.at(i) == 'c')
-                    giveFlags.insert(ADMFLAG_KICK);
-                else if (flags.at(i) == 'd')
-                    giveFlags.insert(ADMFLAG_BAN);
-                else if (flags.at(i) == 'e')
-                    giveFlags.insert(ADMFLAG_UNBAN);
-                else if (flags.at(i) == 'f')
-                    giveFlags.insert(ADMFLAG_SLAY);
-                else if (flags.at(i) == 'g')
-                    giveFlags.insert(ADMFLAG_CHANGEMAP);
-                else if (flags.at(i) == 'h')
-                    giveFlags.insert(ADMFLAG_CONVARS);
-                else if (flags.at(i) == 'i')
-                    giveFlags.insert(ADMFLAG_CONFIG);
-                else if (flags.at(i) == 'j')
-                    giveFlags.insert(ADMFLAG_CHAT);
-                else if (flags.at(i) == 'k')
-                    giveFlags.insert(ADMFLAG_VOTE);
-                else if (flags.at(i) == 'l')
-                    giveFlags.insert(ADMFLAG_PASSWORD);
-                else if (flags.at(i) == 'm')
-                    giveFlags.insert(ADMFLAG_RCON);
-                else if (flags.at(i) == 'n')
-                    giveFlags.insert(ADMFLAG_CHEATS);
-                else if (flags.at(i) == 'o')
-                    giveFlags.insert(ADMFLAG_CUSTOM1);
-                else if (flags.at(i) == 'p')
-                    giveFlags.insert(ADMFLAG_CUSTOM2);
-                else if (flags.at(i) == 'q')
-                    giveFlags.insert(ADMFLAG_CUSTOM3);
-                else if (flags.at(i) == 'r')
-                    giveFlags.insert(ADMFLAG_CUSTOM4);
-                else if (flags.at(i) == 's')
-                    giveFlags.insert(ADMFLAG_CUSTOM5);
-                else if (flags.at(i) == 't')
-                    giveFlags.insert(ADMFLAG_CUSTOM6);
-                else if (flags.at(i) == 'z')
-                    giveFlags.insert(ADMFLAG_ROOT);
+                if (flagsPermissions.find(flags.at(i)) != flagsPermissions.end())
+                    giveFlags.insert(flagsPermissions.at(flags.at(i)));
                 else
                     logger->Write(LOGLEVEL_WARNING, "Invalid flag for '%llu': '%c'\n", steamid, flags.at(i));
             }
