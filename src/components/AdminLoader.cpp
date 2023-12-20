@@ -5,7 +5,7 @@
 #include <swiftly/logger.h>
 #include <set>
 
-static const std::map<int, int> flagsPermissions = {
+const std::map<int, int> flagsPermissions = {
     {'a', ADMFLAG_RESERVATION},
     {'b', ADMFLAG_GENERIC},
     {'c', ADMFLAG_KICK},
@@ -77,6 +77,12 @@ void LoadAdmins()
             uint64_t steamid = std::stoull(db->fetchValue<const char *>(result, i, "steamid"));
             int immunity = db->fetchValue<int>(result, i, "immunity");
             std::string flags = db->fetchValue<const char *>(result, i, "flags");
+
+            if (immunity < 0)
+            {
+                logger->Write(LOGLEVEL_WARNING, "Immunity for '%llu' can't be negative, automatically setting it to 0\n", steamid);
+                immunity = 0;
+            }
 
             std::set<int> giveFlags;
 
