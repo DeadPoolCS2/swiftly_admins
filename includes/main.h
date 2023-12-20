@@ -51,6 +51,7 @@ void PerformGag(Player *player, uint64_t admin_steamid, int seconds, std::string
 void PerformBan(uint64_t player_steamid, uint64_t admin_steamid, int seconds, std::string reason);
 void PerformUnban(uint64_t player_steamid, uint64_t admin_steamid);
 void CheckExpiredSanctions(Player *player, bool sendmessage = true);
+bool HasValidFlags(std::string flags);
 
 void PerformUngag(Player *player);
 void PerformUnmute(Player *player);
@@ -60,5 +61,6 @@ std::string ComputeSanctionTime(uint32_t seconds);
 extern std::map<uint64_t, int> admins;
 extern std::map<uint64_t, int> adminImmunities;
 extern std::map<uint64_t, Player *> playersToCheckForSanctions;
+extern const std::map<int, int> flagsPermissions;
 
 #endif

@@ -130,3 +130,12 @@ void ReloadServerAdmins()
         LoadAdmin(player);
     }
 }
+
+bool HasValidFlags(std::string flags)
+{
+    for (uint32_t i = 0; i < flags.size(); i++)
+        if (flagsPermissions.find(flags.at(i)) == flagsPermissions.end())
+            return false;
+
+    return true;
+}

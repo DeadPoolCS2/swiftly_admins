@@ -7,6 +7,22 @@
 		"en": "%s Syntax: %sban <player> <days / 0 - permanent> <reason>\n",
 		"ro": "%s Sintaxă: %sban <player> <zile / 0 - permanent> <motiv>\n"
 	},
+	"addadmin.syntax": {
+		"en": "%s Syntax: %saddadmin <steamid64> <flags> <immunity>\n",
+		"ro": "%s Sintaxă: %saddadmin <steamid64> <flags> <immunity>\n"
+	},
+	"addadmin.message": {
+		"en": "%s %s added '%llu' as admin. (Flags: %s, Immunity: %d)\n",
+		"ro": "%s %s l-a adaugat pe '%llu' ca și admin. (Flags: %s, Imunitate: %d)\n"
+	},
+	"invalid_flags": {
+		"en": "%s Invalid flags.\n",
+		"ro": "%s Flag-uri invalide.\n"
+	},
+	"invalid_immunity": {
+		"en": "%s Invalid immunity.\n",
+		"ro": "%s Imunitate invalidă.\n"
+	},
 	"cannot_use_command": {
 		"en": "%s You don't have access to use this command on that player.\n",
 		"ro": "%s Nu ai acces să folosești această comandă pe acest jucător.\n"

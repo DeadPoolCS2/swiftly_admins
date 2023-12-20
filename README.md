@@ -85,6 +85,7 @@ immunity => A number greater or equal than 0
 |      Command     |        Flag       |               Description              |
 |:----------------:|:-----------------:|:--------------------------------------:|
 |   !reloadadmins  |    ADMFLAG_ROOT   |        Reload admins on server.        |
+|     !addadmin    |       CONSOLE     |        Adds an admin on server.        |
 |       !rcon      |    ADMFLAG_RCON   |      Executes a command on server.     |
 |       !slay      |    ADMFLAG_SLAY   |             Kills a player.            |
 |       !slap      |    ADMFLAG_SLAY   |             Slaps a player.            |

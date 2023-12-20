@@ -952,9 +952,33 @@ void Command_Slap(int playerID, const char **args, uint32_t argsCount, bool sile
     }
 }
 
+void Command_AddAdmin(int playerID, const char **args, uint32_t argsCount, bool silent)
+{
+    if (playerID != -1)
+        return;
+
+    if (argsCount < 3)
+        return print(FetchTranslation("admins.addadmin.syntax"), config->Fetch<const char *>("admins.prefix"), "sw_");
+
+    uint64_t steamid = StringToULongLong(args[0]);
+    std::string flags = args[1];
+    int immunity = StringToInt(args[2]);
+
+    if (immunity < 0)
+        return print(FetchTranslation("admins.invalid_immunity"), config->Fetch<const char *>("admins.prefix"), "sw_");
+
+    if (!HasValidFlags(flags))
+        return print(FetchTranslation("admins.invalid_flags"), config->Fetch<const char *>("admins.prefix"), "sw_");
+
+    db->Query("insert into %s (steamid, flags, immunity) values ('%llu', '%s', '%d')", config->Fetch<const char *>("admins.table_name.admins"), steamid, flags.c_str(), immunity);
+    ReloadServerAdmins();
+    print(FetchTranslation("admins.addadmin.message"), config->Fetch<const char *>("admins.prefix"), "CONSOLE", steamid, flags.c_str(), immunity);
+}
+
 void RegisterCommands()
 {
     commands->Register("reloadadmins", reinterpret_cast<void *>(&Command_ReloadAdmins));
+    commands->Register("addadmin", reinterpret_cast<void *>(&Command_AddAdmin));
     commands->Register("rcon", reinterpret_cast<void *>(&Command_Rcon));
 
     commands->Register("slay", reinterpret_cast<void *>(&Command_Slay));
