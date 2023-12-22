@@ -26,7 +26,7 @@
 ```json
 {
     "swiftly_admins": {
-        "host": "...",
+        "hostname": "...",
         "username": "...",
         "password": "...",
         "database": "...",
