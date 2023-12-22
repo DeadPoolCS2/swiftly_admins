@@ -69,7 +69,7 @@ const char *GetPluginAuthor()
 
 const char *GetPluginVersion()
 {
-    return "1.0.0";
+    return "1.0.1 - Beta";
 }
 
 const char *GetPluginName()
