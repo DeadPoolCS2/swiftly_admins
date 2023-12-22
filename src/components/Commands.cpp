@@ -965,20 +965,42 @@ void Command_AddAdmin(int playerID, const char **args, uint32_t argsCount, bool 
     int immunity = StringToInt(args[2]);
 
     if (immunity < 0)
-        return print(FetchTranslation("admins.invalid_immunity"), config->Fetch<const char *>("admins.prefix"), "sw_");
+        return print(FetchTranslation("admins.invalid_immunity"), config->Fetch<const char *>("admins.prefix"));
 
     if (!HasValidFlags(flags))
-        return print(FetchTranslation("admins.invalid_flags"), config->Fetch<const char *>("admins.prefix"), "sw_");
+        return print(FetchTranslation("admins.invalid_flags"), config->Fetch<const char *>("admins.prefix"));
+
+    if (admins.find(steamid) != admins.end())
+        return print(FetchTranslation("admins.already_has_admin"), config->Fetch<const char *>("admins.prefix"), steamid);
 
     db->Query("insert into %s (steamid, flags, immunity) values ('%llu', '%s', '%d')", config->Fetch<const char *>("admins.table_name.admins"), steamid, flags.c_str(), immunity);
     ReloadServerAdmins();
     print(FetchTranslation("admins.addadmin.message"), config->Fetch<const char *>("admins.prefix"), "CONSOLE", steamid, flags.c_str(), immunity);
 }
 
+void Command_RemoveAdmin(int playerID, const char **args, uint32_t argsCount, bool silent)
+{
+    if (playerID != -1)
+        return;
+
+    if (argsCount < 1)
+        return print(FetchTranslation("admins.removeadmin.syntax"), config->Fetch<const char *>("admins.prefix"), "sw_");
+
+    uint64_t steamid = StringToULongLong(args[0]);
+
+    if (admins.find(steamid) == admins.end())
+        return print(FetchTranslation("admins.is_not_an_admin"), config->Fetch<const char *>("admins.prefix"), steamid);
+
+    db->Query("delete from %s where steamid = '%llu' limit 1", config->Fetch<const char *>("admins.table_name.admins"), steamid);
+    ReloadServerAdmins();
+    print(FetchTranslation("admins.removeadmin.message"), config->Fetch<const char *>("admins.prefix"), "CONSOLE", steamid);
+}
+
 void RegisterCommands()
 {
     commands->Register("reloadadmins", reinterpret_cast<void *>(&Command_ReloadAdmins));
     commands->Register("addadmin", reinterpret_cast<void *>(&Command_AddAdmin));
+    commands->Register("removeadmin", reinterpret_cast<void *>(&Command_RemoveAdmin));
     commands->Register("rcon", reinterpret_cast<void *>(&Command_Rcon));
 
     commands->Register("slay", reinterpret_cast<void *>(&Command_Slay));

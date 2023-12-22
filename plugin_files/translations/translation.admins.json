@@ -1,4 +1,16 @@
 {
+	"addadmin.message": {
+		"en": "%s %s added '%llu' as admin. (Flags: %s, Immunity: %d)\n",
+		"ro": "%s %s l-a adaugat pe '%llu' ca și admin. (Flags: %s, Imunitate: %d)\n"
+	},
+	"addadmin.syntax": {
+		"en": "%s Syntax: %saddadmin <steamid64> <flags> <immunity>\n",
+		"ro": "%s Sintaxă: %saddadmin <steamid64> <flags> <immunity>\n"
+	},
+	"already_has_admin": {
+		"en": "%s '%llu' already has admin.\n",
+		"ro": "%s '%llu' deja are admin.\n"
+	},
 	"ban.message": {
 		"en": "%s %s banned %s for %s. Reason: %s\n",
 		"ro": "%s %s i-a dat ban lui %s pentru %s. Motiv: %s\n"
@@ -6,22 +18,6 @@
 	"ban.syntax": {
 		"en": "%s Syntax: %sban <player> <days / 0 - permanent> <reason>\n",
 		"ro": "%s Sintaxă: %sban <player> <zile / 0 - permanent> <motiv>\n"
-	},
-	"addadmin.syntax": {
-		"en": "%s Syntax: %saddadmin <steamid64> <flags> <immunity>\n",
-		"ro": "%s Sintaxă: %saddadmin <steamid64> <flags> <immunity>\n"
-	},
-	"addadmin.message": {
-		"en": "%s %s added '%llu' as admin. (Flags: %s, Immunity: %d)\n",
-		"ro": "%s %s l-a adaugat pe '%llu' ca și admin. (Flags: %s, Imunitate: %d)\n"
-	},
-	"invalid_flags": {
-		"en": "%s Invalid flags.\n",
-		"ro": "%s Flag-uri invalide.\n"
-	},
-	"invalid_immunity": {
-		"en": "%s Invalid immunity.\n",
-		"ro": "%s Imunitate invalidă.\n"
 	},
 	"cannot_use_command": {
 		"en": "%s You don't have access to use this command on that player.\n",
@@ -79,6 +75,14 @@
 		"en": "%.2f hour(s)",
 		"ro": "%.2f ore"
 	},
+	"invalid_flags": {
+		"en": "%s Invalid flags.\n",
+		"ro": "%s Flag-uri invalide.\n"
+	},
+	"invalid_immunity": {
+		"en": "%s Invalid immunity.\n",
+		"ro": "%s Imunitate invalidă.\n"
+	},
 	"invalid_map": {
 		"en": "%s Map '%s' is invalid. Please choose another one.",
 		"ro": "%s Harta '%s' este invalidă. Te rugăm să alegi o altă hartă."
@@ -90,6 +94,10 @@
 	"invalid_time": {
 		"en": "%s Invalid time. (%d-%d)",
 		"ro": "%s Timp invalid. (%d-%d)"
+	},
+	"is_not_an_admin": {
+		"en": "%s '%llu' is not an admin.\n",
+		"ro": "%s '%llu' nu este un admin.\n"
 	},
 	"kick.message": {
 		"en": "%s %s kicked %s from server. Reason: %s\n",
@@ -174,6 +182,14 @@
 	"reloadadmins": {
 		"en": "%s Admins has been succesfully reloaded.\n",
 		"ro": "%s Adminii au fost reîncărcați cu succes.\n"
+	},
+	"removeadmin.message": {
+		"en": "%s %s removed '%llu' from admin list.\n",
+		"ro": "%s %s l-a scos pe '%llu' din lista de admini.\n"
+	},
+	"removeadmin.syntax": {
+		"en": "%s Syntax: %sremoveadmin <steamid64>\n",
+		"ro": "%s Sintaxă: %sremoveadmin <steamid64>\n"
 	},
 	"say.message": {
 		"en": "{green} (Admin) %s{default}: %s\n",

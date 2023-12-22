@@ -119,6 +119,7 @@ void LoadAdmin(Player *player)
 
 void ReloadServerAdmins()
 {
+    LoadAdmins();
     for (uint32_t i = 0; i < g_playerManager->GetPlayerCap(); i++)
     {
         Player *player = g_playerManager->GetPlayer(i);
