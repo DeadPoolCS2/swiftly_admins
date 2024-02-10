@@ -33,6 +33,7 @@ export("GetImmunity", function(playerid)
 end)
 
 export("IsBanned", function(steamid)
+    if type(steamid) ~= "string" then steamid = tostring(steamid) end
 	local sanctions = db:Query(string.format("select * from %s where sanction_player = '%s' and sanction_type = '%d' and (sanction_expiretime = 0 OR sanction_expiretime - UNIX_TIMESTAMP() > 0) order by id limit 1", config:Fetch("admins.table_name.sanctions"), steamid, SANCTION_BAN))
     return (#sanctions > 0)
 end)
