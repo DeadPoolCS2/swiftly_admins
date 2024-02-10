@@ -1,15 +1,15 @@
 {
 	"addadmin.message": {
-		"en": "%s %s added '%llu' as admin. (Flags: %s, Immunity: %d)\n",
-		"ro": "%s %s l-a adaugat pe '%llu' ca și admin. (Flags: %s, Imunitate: %d)\n"
+		"en": "%s %s added '%s' as admin. (Flags: %s, Immunity: %d)\n",
+		"ro": "%s %s l-a adaugat pe '%s' ca și admin. (Flags: %s, Imunitate: %d)\n"
 	},
 	"addadmin.syntax": {
 		"en": "%s Syntax: %saddadmin <steamid64> <flags> <immunity>\n",
 		"ro": "%s Sintaxă: %saddadmin <steamid64> <flags> <immunity>\n"
 	},
 	"already_has_admin": {
-		"en": "%s '%llu' already has admin.\n",
-		"ro": "%s '%llu' deja are admin.\n"
+		"en": "%s '%s' already has admin.\n",
+		"ro": "%s '%s' deja are admin.\n"
 	},
 	"ban.message": {
 		"en": "%s %s banned %s for %s. Reason: %s\n",
@@ -96,8 +96,8 @@
 		"ro": "%s Timp invalid. (%d-%d)"
 	},
 	"is_not_an_admin": {
-		"en": "%s '%llu' is not an admin.\n",
-		"ro": "%s '%llu' nu este un admin.\n"
+		"en": "%s '%s' is not an admin.\n",
+		"ro": "%s '%s' nu este un admin.\n"
 	},
 	"kick.message": {
 		"en": "%s %s kicked %s from server. Reason: %s\n",
@@ -184,8 +184,8 @@
 		"ro": "%s Adminii au fost reîncărcați cu succes.\n"
 	},
 	"removeadmin.message": {
-		"en": "%s %s removed '%llu' from admin list.\n",
-		"ro": "%s %s l-a scos pe '%llu' din lista de admini.\n"
+		"en": "%s %s removed '%s' from admin list.\n",
+		"ro": "%s %s l-a scos pe '%s' din lista de admini.\n"
 	},
 	"removeadmin.syntax": {
 		"en": "%s Syntax: %sremoveadmin <steamid64>\n",
