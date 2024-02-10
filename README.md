@@ -50,6 +50,14 @@ flags => The flags provided below (example: abcd)
 immunity => A number greater or equal than 0
 ```
 
+* Or, you can use `sw_addadmin` in server console, respecting the following conditions:
+
+```
+steamid => SteamID 64 of the player
+flags => The flags provided below (example: abcd)
+immunity => A number greater or equal than 0
+```
+
 ### Admin Flags 🛡️
 
 * Currently supported flags are the following:
@@ -77,6 +85,19 @@ immunity => A number greater or equal than 0
 |   r  | ADMFLAG_CUSTOM4 |                            Custom Flag 4                            |
 |   s  | ADMFLAG_CUSTOM5 |                            Custom Flag 5                            |
 |   t  | ADMFLAG_CUSTOM6 |                            Custom Flag 6                            |
+
+### Admin Exports 🛠️
+
+The following exports are available:
+
+|     Name    |    Arguments    |                            Description                            |
+|:-----------:|:---------------:|:-----------------------------------------------------------------:|
+|   HasFlags  | playerid, flags | Checks if a player has the flags provided in the second argument  |
+|   IsMuted   |     playerid    |                   Checks if the player is muted                   |
+|   IsGagged  |     playerid    |                   Checks if the player is gagged                  |
+|  IsSilenced |     playerid    |                  Checks if the player is silenced                 |
+| GetImmunity |     playerid    |                 Returns the immunity of the player                |
+|   IsBanned  |     steamid     |               Checks if the steamid is banned or not              |
 
 ### Admin Commands 💬
 
