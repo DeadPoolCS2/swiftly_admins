@@ -188,8 +188,7 @@ local ChangeMap = function(playerid, args, argc, silent)
         print(string.format(FetchTranslation("admins.changing_map"), config:Fetch("admins.prefix"), map))
         playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.changing_map"), config:Fetch("admins.prefix"), map))
 
-        CreateThread(function()
-            Wait(3000)
+        SetTimeout(3000, function()
             server:ChangeLevel(map)
         end)
     else
@@ -203,8 +202,7 @@ local ChangeMap = function(playerid, args, argc, silent)
         if server:IsMapValid(map) == 0 then return print(string.format(FetchTranslation("admins.invalid_map"), config:Fetch("admins.prefix"), map)) end
         playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.changing_map"), config:Fetch("admins.prefix"), map))
 
-        CreateThread(function()
-            Wait(3000)
+        SetTimeout(3000, function()
             server:ChangeLevel(map)
         end)
     end
