@@ -662,3 +662,61 @@ commands:Register("removeadmin", function(playerid, args, argc, silent)
     ReloadServerAdmins()
     print(string.format(FetchTranslation("admins.removeadmin.message"), config:Fetch("admins.prefix"), "CONSOLE", steamid))
 end)
+
+commands:Register("rr", function(playerid, args, argc, silent)
+    if playerid == -1 then
+        if argc > 1 then return print(string.format(FetchTranslation("admins.rr.syntax"), config:Fetch("admins.prefix"), "sw_")) end
+
+        local time = tonumber(args[1])
+        if time == nil then time = 1 end
+        if time == 0 then
+            if restart_round then
+                print(string.format(FetchTranslation("admins.rr.cancel"), config:Fetch("admins.prefix"), "CONSOLE"))
+                playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.rr.cancel"), config:Fetch("admins.prefix"), "CONSOLE"))
+                restart_round = false
+            else
+                print(string.format(FetchTranslation("admins.rr.no_restart"), config:Fetch("admins.prefix"), "CONSOLE"))
+                playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.rr.no_restart"), config:Fetch("admins.prefix"), "CONSOLE"))
+            end
+        else
+            print(string.format(FetchTranslation("admins.rr.message"), config:Fetch("admins.prefix"), "CONSOLE", time))
+            playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.rr.message"), config:Fetch("admins.prefix"), "CONSOLE", time))
+            restart_round = true
+            SetTimeout(time * 1000, function()
+                if restart_round then
+                    server:ExecuteCommand("sv_cheats 1; endround; sv_cheats 0;") -- Lazy way, but works.
+                    restart_round = false
+                end
+            end)
+        end
+    else
+        local player = GetPlayer(playerid)
+        if not player then return end
+
+        if not PlayerHasFlag(player, ADMFLAG_KICK) then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.no_access"), config:Fetch("admins.prefix"))) end
+        if argc > 1 then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.rr.syntax"), config:Fetch("admins.prefix"), GetPrefix(silent))) end
+
+        local time = tonumber(args[1])
+        if time == nil then time = 1 end
+        if time == 0 then
+            if restart_round then
+                print(string.format(FetchTranslation("admins.rr.cancel"), config:Fetch("admins.prefix"), player:GetName()))
+                playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.rr.cancel"), config:Fetch("admins.prefix"), player:GetName()))
+                restart_round = false
+            else
+                print(string.format(FetchTranslation("admins.rr.no_restart"), config:Fetch("admins.prefix"), player:GetName()))
+                playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.rr.no_restart"), config:Fetch("admins.prefix"), player:GetName()))
+            end
+        else
+            print(string.format(FetchTranslation("admins.rr.message"), config:Fetch("admins.prefix"), player:GetName(), time))
+            playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.rr.message"), config:Fetch("admins.prefix"), player:GetName(), time))
+            restart_round = true
+            SetTimeout(time * 1000, function()
+                if restart_round then
+                    server:ExecuteCommand("sv_cheats 1; endround; sv_cheats 0;") -- Lazy way, but works.
+                    restart_round = false
+                end
+            end)
+        end
+    end
+end)
