@@ -1110,3 +1110,40 @@ commands:Register("disarm", function(playerid, args, argc, silent) -- diff with 
         playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.disarm.message"), config:Fetch("admins.prefix"), player:GetName(), target:GetName()))
     end
 end)
+
+commands:Register("xyz", function(playerid, args, argc, silent)
+    if playerid == -1 then
+        if argc > 1 then return print(string.format(FetchTranslation("admins.xyz.syntax"), config:Fetch("admins.prefix"), "sw_")) end
+
+        local targetid = GetPlayerId(args[1])
+        if targetid == -1 then return print(string.format(FetchTranslation("admins.invalid_player"), config:Fetch("admins.prefix"))) end
+
+        local target = GetPlayer(targetid)
+        if not target then return print(string.format(FetchTranslation("admins.player_not_connected"), config:Fetch("admins.prefix"), args[1])) end
+
+        local position = player:coords():Get()
+        print(string.format(FetchTranslation("admins.xyz.message"), config:Fetch("admins.prefix"), "CONSOLE", target:GetName(), position.x, position.y, position.z))
+        playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.xyz.message"), config:Fetch("admins.prefix"), "CONSOLE", target:GetName(), position.x, position.y, position.z))
+    else
+        local player = GetPlayer(playerid)
+        if not player then return end
+
+        if argc > 1 then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.xyz.syntax"), config:Fetch("admins.prefix"), GetPrefix(silent))) end
+
+        local targetid = GetPlayerId(args[1])
+        if targetid == -1 then
+            if argc > 2 then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.xyz.syntax"), config:Fetch("admins.prefix"), GetPrefix(silent))) end
+
+            local position = player:coords():Get()
+            print(string.format(FetchTranslation("admins.xyz.message"), config:Fetch("admins.prefix"), player:GetName(), position.x, position.y, position.z))
+            playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.xyz.message"), config:Fetch("admins.prefix"), player:GetName(), position.x, position.y, position.z))
+        else
+            local target = GetPlayer(targetid)
+            if not target then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.player_not_connected"), config:Fetch("admins.prefix"), args[1])) end
+
+            local position = target:coords():Get()
+            print(string.format(FetchTranslation("admins.xyz.message"), config:Fetch("admins.prefix"), player:GetName(), target:GetName(), position.x, position.y, position.z))
+            playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.xyz.message"), config:Fetch("admins.prefix"), player:GetName(), target:GetName(), position.x, position.y, position.z))
+        end
+    end
+end)
