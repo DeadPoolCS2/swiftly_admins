@@ -930,3 +930,24 @@ commands:Register("respawn", function(playerid, args, argc, silent)
         playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.respawn.message"), config:Fetch("admins.prefix"), player:GetName(), target:GetName()))
     end
 end)
+
+commands:Register("cc", function(playerid, args, argc, silent)
+    if playerid == -1 then
+        for i = 1, 20 do
+            playermanager:SendMsg(MessageType.Chat, " \x01\x0B \x0B ")
+        end
+        print(string.format(FetchTranslation("admins.cc.message"), config:Fetch("admins.prefix"), "CONSOLE"))
+        playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.cc.message"), config:Fetch("admins.prefix"), "CONSOLE"))
+    else
+        local player = GetPlayer(playerid)
+        if not player then return end
+
+        if not PlayerHasFlag(player, ADMFLAG_CHAT) then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.no_access"), config:Fetch("admins.prefix"))) end
+
+        for i = 1, 20 do
+            playermanager:SendMsg(MessageType.Chat, " \x01\x0B \x0B ", player)
+        end
+        print(string.format(FetchTranslation("admins.cc.message"), config:Fetch("admins.prefix"), player:GetName()))
+        playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.cc.message"), config:Fetch("admins.prefix"), player:GetName()))
+    end
+end)
