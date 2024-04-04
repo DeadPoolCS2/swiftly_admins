@@ -57,3 +57,16 @@ function IsValidWeapon(weapon)
 
 	return false
 end
+
+function IsValidItem(item)
+	local itemList = {
+		"item_assaultsuit",
+		"item_kevlar" -- just this two are working in CS2 at the moment.
+	}
+
+	for _, v in ipairs(itemList) do
+		if item == v then return true end
+	end
+
+	return false
+end
