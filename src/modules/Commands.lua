@@ -720,3 +720,31 @@ commands:Register("rr", function(playerid, args, argc, silent)
         end
     end
 end)
+
+commands:Register("rg", function(playerid, args, argc, silent)
+    if playerid == -1 then
+        if argc > 1 then return print(string.format(FetchTranslation("admins.rg.syntax"), config:Fetch("admins.prefix"), "sw_")) end
+
+        local time = tonumber(args[1])
+        if time == nil then time = 1
+        elseif time < 0 then time = 0 end
+
+        print(string.format(FetchTranslation("admins.rg.message"), config:Fetch("admins.prefix"), "CONSOLE", time))
+        playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.rg.message"), config:Fetch("admins.prefix"), "CONSOLE", time))
+        server:ExecuteCommand(string.format("mp_restartgame %d", time))
+    else
+        local player = GetPlayer(playerid)
+        if not player then return end
+
+        if not PlayerHasFlag(player, ADMFLAG_KICK) then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.no_access"), config:Fetch("admins.prefix"))) end
+        if argc > 1 then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.rg.syntax"), config:Fetch("admins.prefix"), GetPrefix(silent))) end
+
+        local time = tonumber(args[1])
+        if time == nil then time = 1
+        elseif time < 0 then time = 0 end
+
+        print(string.format(FetchTranslation("admins.rg.message"), config:Fetch("admins.prefix"), player:GetName(), time))
+        playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.rg.message"), config:Fetch("admins.prefix"), player:GetName(), time))
+        server:ExecuteCommand(string.format("mp_restartgame %d", time))
+    end
+end)
