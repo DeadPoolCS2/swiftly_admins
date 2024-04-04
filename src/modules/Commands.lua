@@ -1101,7 +1101,7 @@ commands:Register("disarm", function(playerid, args, argc, silent) -- diff with 
         if target:vars():Get("admin.immunity") > player:vars():Get("admin.immunity") then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.cannot_use_command"), config:Fetch("admins.prefix"))) end
 
         target:weapons():RemoveWeapons()
-        -- check left weapon
+        -- check remaining weapons and remove them
         local currentweapon = player:weapons():GetWeaponFromSlot(WeaponSlot.CurrentWeapon)
         if currentweapon then
             currentweapon:Remove()
