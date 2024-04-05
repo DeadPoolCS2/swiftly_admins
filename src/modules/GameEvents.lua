@@ -49,3 +49,21 @@ events:on("ShouldHearVoice", function(playerid)
     
     return (player:vars():Get("sanctions.ismuted") == 0)
 end)
+
+events:on("OnPlayerDamage", function(playerid, damage, damagetype, bullettype, damageflags)
+    local player = GetPlayer(playerid)
+    if not player then return end
+
+    if player:vars():Get("godmode") == 1 then
+        return false
+    end
+end)
+
+events:on("OnPlayerSpawn", function(playerid)
+    local player = GetPlayer(playerid)
+    if not player then return end
+
+    if player:vars():Get("godmode") == 1 then
+        player:vars():Set("godmode", 0)
+    end
+end)

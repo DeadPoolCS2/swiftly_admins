@@ -1167,3 +1167,47 @@ commands:Register("xyz", function(playerid, args, argc, silent)
         player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.xyz.message.client"), config:Fetch("admins.prefix"), position.x, position.y, position.z))
     end
 end)
+
+commands:Register("god", function(playerid, args, argc, silent)
+    if playerid == -1 then
+        if argc < 1 then return print(string.format(FetchTranslation("admins.god.syntax"), config:Fetch("admins.prefix"), "sw_")) end
+
+        local targetid = GetPlayerId(args[1])
+        if targetid == -1 then return print(string.format(FetchTranslation("admins.invalid_player"), config:Fetch("admins.prefix"))) end
+
+        local target = GetPlayer(targetid)
+        if not target then return print(string.format(FetchTranslation("admins.player_not_connected"), config:Fetch("admins.prefix"), args[1])) end
+
+        if target:vars():Get("godmode") == 1 then
+            target:vars():Set("godmode", 0)
+            print(string.format(FetchTranslation("admins.god.message"), config:Fetch("admins.prefix"), "CONSOLE", target:GetName(), FetchTranslation("admins.disabled")))
+            playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.god.message"), config:Fetch("admins.prefix"), "CONSOLE", target:GetName(), FetchTranslation("admins.disabled")))
+        else
+            target:vars():Set("godmode", 1)
+            print(string.format(FetchTranslation("admins.god.message"), config:Fetch("admins.prefix"), "CONSOLE", target:GetName(), FetchTranslation("admins.enabled")))
+            playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.god.message"), config:Fetch("admins.prefix"), "CONSOLE", target:GetName(), FetchTranslation("admins.enabled")))
+        end
+    else
+        local player = GetPlayer(playerid)
+        if not player then return end
+
+        if not PlayerHasFlag(player, ADMFLAG_KICK) then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.no_access"), config:Fetch("admins.prefix"))) end
+        if argc < 1 then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.god.syntax"), config:Fetch("admins.prefix"), GetPrefix(silent))) end
+
+        local targetid = GetPlayerId(args[1])
+        if targetid == -1 then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.invalid_player"), config:Fetch("admins.prefix"))) end
+
+        local target = GetPlayer(targetid)
+        if not target then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.player_not_connected"), config:Fetch("admins.prefix"), args[1])) end
+
+        if target:vars():Get("godmode") == 1 then
+            target:vars():Set("godmode", 0)
+            print(string.format(FetchTranslation("admins.god.message"), config:Fetch("admins.prefix"), player:GetName(), target:GetName(), FetchTranslation("admins.disabled")))
+            playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.god.message"), config:Fetch("admins.prefix"), player:GetName(), target:GetName(), FetchTranslation("admins.disabled")))
+        else
+            target:vars():Set("godmode", 1)
+            print(string.format(FetchTranslation("admins.god.message"), config:Fetch("admins.prefix"), player:GetName(), target:GetName(), FetchTranslation("admins.enabled")))
+            playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.god.message"), config:Fetch("admins.prefix"), player:GetName(), target:GetName(), FetchTranslation("admins.enabled")))
+        end
+    end
+end)
