@@ -67,3 +67,11 @@ events:on("OnPlayerSpawn", function(playerid)
         player:vars():Set("godmode", 0)
     end
 end)
+
+--storage each deathposition on event OnPlayerDeath for each player
+events:on("OnPlayerDeath", function(playerid, killerid, reason)
+    local player = GetPlayer(playerid)
+    if not player then return end
+
+    player:vars():Set("deathposition", player:coords():Get())
+end)
