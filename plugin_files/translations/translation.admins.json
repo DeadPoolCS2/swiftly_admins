@@ -317,5 +317,175 @@
 		"en": "%s Syntax: %sunsilence <player>\n",
 		"ro": "%s Sintaxă: %sunsilence <player>\n",
 		"es": "%s Sintaxis: %sunsilence <jugador>\n"
+	},
+	"rr.syntax": {
+		"en": "%s Syntax: %srr <time>\n",
+		"ro": "%s Sintaxă: %srr <timp>\n",
+		"es": "%s Sintaxis: %srr <tiempo>\n"
+	},
+	"rr.cancel": {
+		"en": "%s Round restart has been cancelled.\n",
+		"ro": "%s Restartul rundei a fost anulat.\n",
+		"es": "%s El reinicio de la ronda ha sido cancelado.\n"
+	},
+	"rr.no_restart": {
+		"en": "%s There is no round restart in progress.\n",
+		"ro": "%s Nu există niciun restart de rundă în desfășurare.\n",
+		"es": "%s No hay reinicio de ronda en progreso.\n"
+	},
+	"rr.message": {
+		"en": "%s %s has initiated a round restart. It will happen in %d second(s).\n",
+		"ro": "%s %s a inițiat un restart de rundă. Acesta va avea loc în %d secundă(e).\n",
+		"es": "%s %s ha iniciado un reinicio de ronda. Ocurrirá en %d segundo(s).\n"
+	},
+	"rg.syntax": {
+		"en": "%s Syntax: %srg <time>\n",
+		"ro": "%s Sintaxă: %srg <timp>\n",
+		"es": "%s Sintaxis: %srg <tiempo>\n"
+	},
+	"rg.cancel": {
+		"en": "%s Round restart has been cancelled.\n",
+		"ro": "%s Restartul rundei a fost anulat.\n",
+		"es": "%s El reinicio de la ronda ha sido cancelado.\n"
+	},
+	"rg.no_restart": {
+		"en": "%s There is no round restart in progress.\n",
+		"ro": "%s Nu există niciun restart de rundă în desfășurare.\n",
+		"es": "%s No hay reinicio de ronda en progreso.\n"
+	},
+	"rg.message": {
+		"en": "%s %s has initiated a round restart. It will happen in %d second(s).\n",
+		"ro": "%s %s a inițiat un restart de rundă. Acesta va avea loc în %d secundă(e).\n",
+		"es": "%s %s ha iniciado un reinicio de ronda. Ocurrirá en %d segundo(s).\n"
+	},
+	"hp.syntax": {
+		"en": "%s Syntax: %shp <player> <health>\n",
+		"ro": "%s Sintaxă: %shp <player> <sănătate>\n",
+		"es": "%s Sintaxis: %shp <jugador> <salud>\n"
+	},
+	"hp.message": {
+		"en": "%s %s has set %s's health to %d.\n",
+		"ro": "%s %s i-a setat sănătatea lui %s la %d.\n",
+		"es": "%s %s ha establecido la salud de %s a %d.\n"
+	},
+	"hp.invalid_health": {
+		"en": "%s Invalid health value. (%d-%d)\n",
+		"ro": "%s Valoare de sănătate invalidă. (%d-%d)\n",
+		"es": "%s Valor de salud inválido. (%d-%d)\n"
+	},
+	"team.syntax": {
+		"en": "%s Syntax: %steam <player> <team>\n",
+		"ro": "%s Sintaxă: %steam <player> <echipă>\n",
+		"es": "%s Sintaxis: %steam <jugador> <equipo>\n"
+	},
+	"team.invalid_team": {
+		"en": "%s Invalid team.\n",
+		"ro": "%s Echipă invalidă.\n",
+		"es": "%s Equipo inválido.\n"
+	},
+	"team.message": {
+		"en": "%s %s has moved %s to team %s.\n",
+		"ro": "%s %s l-a mutat pe %s la echipa %s.\n",
+		"es": "%s %s ha movido a %s al equipo %s.\n"
+	},
+	"swap.syntax": {
+		"en": "%s Syntax: %sswap <player1> <player2>\n",
+		"ro": "%s Sintaxă: %sswap <player1> <player2>\n",
+		"es": "%s Sintaxis: %sswap <jugador1> <jugador2>\n"
+	},
+	"swap.message": {
+		"en": "%s %s has team-swapped %s.\n",
+		"ro": "%s %s a schimbat echipa lui %s.\n",
+		"es": "%s %s ha cambiado de equipo a %s.\n"
+	},
+	"respawn.syntax": {
+		"en": "%s Syntax: %srespawn <player>\n",
+		"ro": "%s Sintaxă: %srespawn <player>\n",
+		"es": "%s Sintaxis: %srespawn <jugador>\n"
+	},
+	"respawn.message": {
+		"en": "%s %s has respawned %s.\n",
+		"ro": "%s %s a respawnat pe %s.\n",
+		"es": "%s %s ha reaparecido a %s.\n"
+	},
+	"cc.syntax": {
+		"en": "%s Syntax: %scc\n",
+		"ro": "%s Sintaxă: %scc\n",
+		"es": "%s Sintaxis: %scc\n"
+	},
+	"cc.message": {
+		"en": "%s %s has cleared chat.\n",
+		"ro": "%s %s a șters chat-ul.\n",
+		"es": "%s %s ha limpiado el chat.\n"
+	},
+	"give.syntax": {
+		"en": "%s Syntax: %sgive <player> <weapon>\n",
+		"ro": "%s Sintaxă: %sgive <player> <armă>\n",
+		"es": "%s Sintaxis: %sgive <jugador> <arma>\n"
+	},
+	"give.message": {
+		"en": "%s %s has given %s a %s.\n",
+		"ro": "%s %s a dat lui %s un %s.\n",
+		"es": "%s %s ha dado a %s un(a) %s.\n"
+	},
+	"give.invalid_weapon": {
+		"en": "%s Invalid weapon.\n",
+		"ro": "%s Arma invalidă.\n",
+		"es": "%s Arma inválida.\n"
+	},
+	"giveitem.syntax": {
+		"en": "%s Syntax: %sgiveitem <player> <item>\n",
+		"ro": "%s Sintaxă: %sgiveitem <player> <item>\n",
+		"es": "%s Sintaxis: %sgiveitem <jugador> <item>\n"
+	},
+	"giveitem.message": {
+		"en": "%s %s has given %s a %s.\n",
+		"ro": "%s %s a dat lui %s un %s.\n",
+		"es": "%s %s ha dado a %s un(a) %s.\n"
+	},
+	"giveitem.invalid_item": {
+		"en": "%s Invalid item.\n",
+		"ro": "%s Item invalid.\n",
+		"es": "%s Ítem inválido.\n"
+	},
+	"melee.syntax": {
+		"en": "%s Syntax: %smelee <player>\n",
+		"ro": "%s Sintaxă: %smelee <player>\n",
+		"es": "%s Sintaxis: %smelee <jugador>\n"
+	},
+	"melee.message": {
+		"en": "%s %s left %s only with a knife.\n",
+		"ro": "%s %s l-a lăsat pe %s doar cu cuțitul.\n",
+		"es": "%s %s dejó a %s solamente con un cuchillo.\n"
+	},
+	"disarm.syntax": {
+		"en": "%s Syntax: %sdisarm <player>\n",
+		"ro": "%s Sintaxă: %sdisarm <player>\n",
+		"es": "%s Sintaxis: %sdisarm <jugador>\n"
+	},
+	"disarm.message": {
+		"en": "%s %s left %s without any weapons.\n",
+		"ro": "%s %s l-a lăsat pe %s fără arme.\n",
+		"es": "%s %s dejó a %s sin armas.\n"
+	},
+	"xyz.syntax.server": {
+		"en": "%s Syntax: %sxyz <player>\n",
+		"ro": "%s Sintaxă: %sxyz <player>\n",
+		"es": "%s Sintaxis: %sxyz <jugador>\n"
+	},
+	"xyz.message.server":{
+		"en": "%s %s's coordinates: %s\n",
+		"ro": "%s Coordonatele lui %s: %s\n",
+		"es": "%s Coordenadas de %s: %s\n"
+	},
+	"xyz.syntax.client": {
+		"en": "%s Syntax: %sxyz\n",
+		"ro": "%s Sintaxă: %sxyz\n",
+		"es": "%s Sintaxis: %sxyz\n"
+	},
+	"xyz.message.client":{
+		"en": "%s Your coordinates: %s\n",
+		"ro": "%s Coordonatele tale: %s\n",
+		"es": "%s Tus coordenadas: %s\n"
 	}
 }
