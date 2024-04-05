@@ -474,9 +474,9 @@
 		"es": "%s Sintaxis: %sxyz <jugador>\n"
 	},
 	"xyz.message.server":{
-		"en": "%s %s's coordinates: %s\n",
-		"ro": "%s Coordonatele lui %s: %s\n",
-		"es": "%s Coordenadas de %s: %s\n"
+		"en": "%s %s's coordinates: [%s | %s | %s]\n",
+		"ro": "%s Coordonatele lui %s: [%s | %s | %s]\n",
+		"es": "%s Coordenadas de %s: [%s | %s | %s]\n"
 	},
 	"xyz.syntax.client": {
 		"en": "%s Syntax: %sxyz\n",
@@ -484,8 +484,8 @@
 		"es": "%s Sintaxis: %sxyz\n"
 	},
 	"xyz.message.client":{
-		"en": "%s Your coordinates: %s\n",
-		"ro": "%s Coordonatele tale: %s\n",
-		"es": "%s Tus coordenadas: %s\n"
+		"en": "%s Your coordinates: [%s | %s | %s]\n",
+		"ro": "%s Coordonatele tale: [%s | %s | %s]\n",
+		"es": "%s Tus coordenadas: [%s | %s | %s]\n"
 	}
 }

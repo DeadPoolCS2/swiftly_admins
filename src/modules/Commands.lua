@@ -1143,6 +1143,7 @@ end)
 
 commands:Register("xyz", function(playerid, args, argc, silent)
     if playerid == -1 then
+        -- for server: sw_xyz. This will show the player's current position.
         if argc > 1 then return print(string.format(FetchTranslation("admins.xyz.syntax.server"), config:Fetch("admins.prefix"), "sw_")) end
 
         local targetid = GetPlayerId(args[1])
@@ -1152,8 +1153,7 @@ commands:Register("xyz", function(playerid, args, argc, silent)
         if not target then return print(string.format(FetchTranslation("admins.player_not_connected"), config:Fetch("admins.prefix"), args[1])) end
 
         local position = target:coords():Get()
-        print(string.format(FetchTranslation("admins.xyz.message.server"), config:Fetch("admins.prefix"), target:GetName(), position))
-        playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.xyz.message"), config:Fetch("admins.prefix"), "CONSOLE", target:GetName(), position))
+        print(string.format(FetchTranslation("admins.xyz.message.server"), config:Fetch("admins.prefix"), target:GetName(), position.x, position.y, position.z))
     else
         -- for client: !xyz. This will show the player's current position.
         local player = GetPlayer(playerid)
@@ -1164,6 +1164,6 @@ commands:Register("xyz", function(playerid, args, argc, silent)
         if argc > 0 then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.xyz.syntax.client"), config:Fetch("admins.prefix"), GetPrefix(silent))) end
 
         local position = player:coords():Get()
-        player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.xyz.message.client"), config:Fetch("admins.prefix"), position))
+        player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.xyz.message.client"), config:Fetch("admins.prefix"), position.x, position.y, position.z))
     end
 end)
