@@ -70,3 +70,19 @@ function IsValidItem(item)
 
 	return false
 end
+
+-- Vector3
+string.split = function(string, split)
+	local splitted = {}
+	for split in string.gmatch(string, "[^"..split.."]+") do 
+			table.insert(splitted, split) 
+	end
+	return splitted
+end
+
+function toVector3(str)
+	local positions = string.split(string.gsub(str, "vector3", ""), ",")
+	for i=1,#positions do positions[i] = tonumber(string.match(positions[i], "%-%d*%.?%d+") or string.match(positions[i], "%d*%.?%d+")) end
+	return vector3(table.unpack(positions))
+end
+--

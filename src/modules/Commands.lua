@@ -1311,3 +1311,37 @@ commands:Register("armor", function(playerid, args, argc, silent)
         playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.armor.message"), config:Fetch("admins.prefix"), player:GetName(), target:GetName(), armor))
     end
 end)
+
+-- respawn 1up player (if dead, respawns in the same position) WIP
+commands:Register("1up", function(playerid, args, argc, silent)
+    if playerid == -1 then
+-- server logic
+    else
+        local player = GetPlayer(playerid)
+        if not player then return end
+
+        if not PlayerHasFlag(player, ADMFLAG_KICK) then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.no_access"), config:Fetch("admins.prefix"))) end
+
+        if argc < 1 then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.1up.syntax"), config:Fetch("admins.prefix"), GetPrefix(silent))) end
+
+        local targetid = GetPlayerId(args[1])
+        if targetid == -1 then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.invalid_player"), config:Fetch("admins.prefix"))) end
+
+        local target = GetPlayer(targetid)
+        if not target then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.player_not_connected"), config:Fetch("admins.prefix"), args[1])) end
+
+        if target:vars():Get("admin.immunity") > player:vars():Get("admin.immunity") then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.cannot_use_command"), config:Fetch("admins.prefix"))) end
+
+        local position = target:vars():Get("deathposition")
+        if position == "nil" then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.1up.no_death_position"), config:Fetch("admins.prefix"), target:GetName())) end
+
+        target:Respawn()
+
+        NextTick(function()
+            target:coords():Set(toVector3(position))
+        end)
+
+        print(string.format(FetchTranslation("admins.1up.message"), config:Fetch("admins.prefix"), player:GetName(), target:GetName()))
+        playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.1up.message"), config:Fetch("admins.prefix"), player:GetName(), target:GetName()))
+    end
+end)
