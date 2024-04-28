@@ -278,6 +278,11 @@
 		"ro": "%s %s i-a dat slap lui %s.\n",
 		"es": "%s %s abofeteó a %s.\n"
 	},
+	"slap.message_with_damage": {
+		"en": "%s %s slapped %s with %d damage.\n",
+		"ro": "%s %s i-a dat slap lui %s cu %d de daune.\n",
+		"es": "%s %s abofeteó a %s con %d de daño.\n"
+	},
 	"slap.syntax": {
 		"en": "%s Syntax: %sslap <player>\n",
 		"ro": "%s Sintaxă: %sslap <player>\n",
