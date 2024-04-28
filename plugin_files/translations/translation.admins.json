@@ -1,4 +1,14 @@
 {
+	"enabled": {
+	"en": "enabled",
+	"ro": "activat",
+	"es": "activado"
+	},
+	"disabled": {
+	"en": "disabled",
+	"ro": "dezactivat",
+	"es": "desactivado"
+	},
 	"addadmin.message": {
 		"en": "%s %s added '%s' as admin. (Flags: %s, Immunity: %d)\n",
 		"ro": "%s %s l-a adaugat pe '%s' ca și admin. (Flags: %s, Imunitate: %d)\n",
@@ -504,9 +514,9 @@
 		"es": "%s Sintaxis: %sgod <jugador>\n"
 	},
 	"god.message": {
-		"en": "%s %s has toggled god mode for %s.\n",
-		"ro": "%s %s a activat/dezactivat modul zeu pentru %s.\n",
-		"es": "%s %s ha activado/desactivado el modo dios para %s.\n"
+		"en": "%s %s has set %s's godmode to '%s'.\n",
+		"ro": "%s %s i-a setat lui %s godmode-ul la '%s'.\n",
+		"es": "%s %s ha establecido el modo dios de %s a '%s'.\n"
 	},
 	"armor.syntax": {
 		"en": "%s Syntax: %sarmor <player> <armor>\n",
