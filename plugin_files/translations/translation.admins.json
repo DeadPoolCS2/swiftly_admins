@@ -532,5 +532,50 @@
 		"en": "%s %s has set %s's armor to %d.\n",
 		"ro": "%s %s i-a setat armura lui %s la %d.\n",
 		"es": "%s %s ha establecido la armadura de %s a %d.\n"
+	},
+	"1up.syntax": {
+		"en": "%s Syntax: %s1up <player>\n",
+		"ro": "%s Sintaxă: %s1up <player>\n",
+		"es": "%s Sintaxis: %s1up <jugador>\n"
+	},
+	"1up.no_death_position": {
+		"en": "%s %s has no death position saved.\n",
+		"ro": "%s %s nu are o poziție de moarte salvată.\n",
+		"es": "%s %s no tiene una posición de muerte guardada.\n"
+	},
+	"1up.message": {
+		"en": "%s %s has respawned and teleported to his death position.\n",
+		"ro": "%s %s a respawnat și a fost teleportat la poziția sa de moarte.\n",
+		"es": "%s %s ha reaparecido y ha sido teletransportado a su posición de muerte.\n"
+	},
+	"tele.syntax": {
+		"en": "%s Syntax: %stele <player> <player>\n",
+		"ro": "%s Sintaxă: %stele <player> <player>\n",
+		"es": "%s Sintaxis: %stele <jugador> <jugador>\n"
+	},
+	"tele.message": {
+		"en": "%s %s has teleported %s to %s.\n",
+		"ro": "%s %s a teleportat pe %s la %s.\n",
+		"es": "%s %s ha teletransportado a %s a %s.\n"
+	},
+	"bring.syntax": {
+		"en": "%s Syntax: %sbring <player>\n",
+		"ro": "%s Sintaxă: %sbring <player>\n",
+		"es": "%s Sintaxis: %sbring <jugador>\n"
+	},
+	"bring.message": {
+		"en": "%s %s has brought %s to his position.\n",
+		"ro": "%s %s a adus pe %s la poziția sa.\n",
+		"es": "%s %s ha traído a %s a su posición.\n"
+	},
+	"goto.syntax": {
+		"en": "%s Syntax: %sgoto <player>\n",
+		"ro": "%s Sintaxă: %sgoto <player>\n",
+		"es": "%s Sintaxis: %sgoto <jugador>\n"
+	},
+	"goto.message": {
+		"en": "%s %s has teleported to %s.\n",
+		"ro": "%s %s s-a teleportat la %s.\n",
+		"es": "%s %s se ha teletransportado a %s.\n"
 	}
 }
