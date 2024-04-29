@@ -577,5 +577,15 @@
 		"en": "%s %s has teleported to %s.\n",
 		"ro": "%s %s s-a teleportat la %s.\n",
 		"es": "%s %s se ha teletransportado a %s.\n"
+	},
+	"noclip.syntax": {
+		"en": "%s Syntax: %snoclip <player>\n",
+		"ro": "%s Sintaxă: %snoclip <player>\n",
+		"es": "%s Sintaxis: %snoclip <jugador>\n"
+	},
+	"noclip.message": {
+		"en": "%s %s has set %s's noclip to '%s'.\n",
+		"ro": "%s %s i-a setat lui %s noclip-ul la '%s'.\n",
+		"es": "%s %s ha establecido el noclip de %s a '%s'.\n"
 	}
 }
