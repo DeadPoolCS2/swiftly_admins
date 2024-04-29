@@ -869,8 +869,8 @@ commands:Register("hp", function(playerid, args, argc, silent) -- !hp <#userid|n
 
         if not PlayerHasFlag(player, ADMFLAG_SLAY) then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.no_access"), config:Fetch("admins.prefix"))) end
         if argc < 2 then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.hp.syntax"), config:Fetch("admins.prefix"), GetPrefix(silent))) end
-       
-        -- currently argc > 3 to disable helmet feature, set to argc == 4 to enable helmet feature
+
+        -- NOTE: currently argc > 3 to disable helmet feature, set to argc == 4 to enable helmet feature in the future.
         if argc > 3 then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.hp.syntax"), config:Fetch("admins.prefix"), GetPrefix(silent))) end
 
         local targetid = GetPlayerId(args[1])
@@ -911,7 +911,7 @@ commands:Register("hp", function(playerid, args, argc, silent) -- !hp <#userid|n
 
             if helmet == 1 then target:weapons():GiveWeapons("item_assaultsuit") 
             elseif helmet == 0 then
-                -- TODO: Remove helmet feature
+                -- TODO: Remove helmet feature (missing method)
             end
             target:armor():Set(armor)
             print(string.format(FetchTranslation("admins.hp.message3"), config:Fetch("admins.prefix"), player:GetName(), target:GetName(), health, armor, helmet))
