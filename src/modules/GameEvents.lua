@@ -66,6 +66,14 @@ events:on("OnPlayerSpawn", function(playerid)
     if player:vars():Get("godmode") == 1 then
         player:vars():Set("godmode", 0)
     end
+
+    if player:vars():Get("noclip") == 1 then
+        player:vars():Set("noclip", 0)
+    end
+
+    if player:vars():Get("freeze") == 1 then
+        player:vars():Set("freeze", 0)
+    end
 end)
 
 events:on("OnPlayerDeath", function(playerid)

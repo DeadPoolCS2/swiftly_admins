@@ -9,6 +9,66 @@
 	"ro": "dezactivat",
 	"es": "desactivado"
 	},
+	"minutes": {
+		"en": "%.2f minute(s)",
+		"ro": "%.2f minut(e)",
+		"es": "%.2f minuto(s)"
+	},
+	"hours": {
+		"en": "%.2f hour(s)",
+		"ro": "%.2f ore",
+		"es": "%.2f hora(s)"
+	},
+	"days": {
+		"en": "%.2f day(s)",
+		"ro": "%.2f zi(le)",
+		"es": "%.2f día(s)"
+	},
+	"forever": {
+		"en": "Forever",
+		"ro": "Pentru totdeauna",
+		"es": "Para siempre"
+	},
+	"never": {
+		"en": "Never",
+		"ro": "Niciodată",
+		"es": "Nunca"
+	},
+	"invalid_time": {
+		"en": "%s Invalid time. (%d-%d)",
+		"ro": "%s Timp invalid. (%d-%d)",
+		"es": "%s Tiempo inválido. (%d-%d)"
+	},
+	"invalid_player": {
+		"en": "%s Player couldn't be found.\n",
+		"ro": "%s Nu am putut găsi jucătorul.\n",
+		"es": "%s No se pudo encontrar al jugador.\n"
+	},
+	"invalid_immunity": {
+		"en": "%s Invalid immunity.\n",
+		"ro": "%s Imunitate invalidă.\n",
+		"es": "%s Inmunidad inválida.\n"
+	},
+	"invalid_flags": {
+		"en": "%s Invalid flags.\n",
+		"ro": "%s Flag-uri invalide.\n",
+		"es": "%s Flags inválidas.\n"
+	},
+	"is_not_an_admin": {
+		"en": "%s '%s' is not an admin.\n",
+		"ro": "%s '%s' nu este un admin.\n",
+		"es": "%s '%s' no es un administrador.\n"
+	},
+	"invalid_map": {
+		"en": "%s Map '%s' is invalid. Please choose another one.",
+		"ro": "%s Harta '%s' este invalidă. Te rugăm să alegi o altă hartă.",
+		"es": "%s Mapa '%s' es inválido. Por favor elige otro."
+	},
+	"no_access": {
+		"en": "%s You don't have access to use this command.\n",
+		"ro": "%s Nu ai acces să folosești această comandă.\n",
+		"es": "%s No tienes acceso para usar este comando.\n"
+	},
 	"addadmin.message": {
 		"en": "%s %s added '%s' as admin. (Flags: %s, Immunity: %d)\n",
 		"ro": "%s %s l-a adaugat pe '%s' ca și admin. (Flags: %s, Imunitate: %d)\n",
@@ -30,9 +90,9 @@
 		"es": "%s %s prohibió %s por %s. Razón: %s\n"
 	},
 	"ban.syntax": {
-		"en": "%s Syntax: %sban <player> <days / 0 - permanent> <reason>\n",
-		"ro": "%s Sintaxă: %sban <player> <zile / 0 - permanent> <motiv>\n",
-		"es": "%s Sintaxis: %sban <jugador> <días / 0 - permanente> <razón>\n"
+		"en": "%s Syntax: %sban <player> <minutes / 0 - permanent> <reason>\n",
+		"ro": "%s Sintaxă: %sban <player> <minute / 0 - permanent> <motiv>\n",
+		"es": "%s Sintaxis: %sban <jugador> <minutos / 0 - permanente> <razón>\n"
 	},
 	"cannot_use_command": {
 		"en": "%s You don't have access to use this command on that player.\n",
@@ -69,16 +129,6 @@
 		"ro": "%s Sintaxă: %scsay <mesaj>\n",
 		"es": "%s Sintaxis: %scsay <mensaje>\n"
 	},
-	"days": {
-		"en": "%.2f day(s)",
-		"ro": "%.2f zi(le)",
-		"es": "%.2f día(s)"
-	},
-	"forever": {
-		"en": "Forever",
-		"ro": "Pentru totdeauna",
-		"es": "Para siempre"
-	},
 	"gag.message": {
 		"en": "%s %s gagged %s for %s. Reason: %s\n",
 		"ro": "%s %s i-a dat gag lui %s pentru %s. Motiv: %s\n",
@@ -99,41 +149,6 @@
 		"ro": "%s Ai primit gag. Expiră în: %s. Motiv: %s",
 		"es": "%s Estás amordazado. Expira en: %s. Razón: %s"
 	},
-	"hours": {
-		"en": "%.2f hour(s)",
-		"ro": "%.2f ore",
-		"es": "%.2f hora(s)"
-	},
-	"invalid_flags": {
-		"en": "%s Invalid flags.\n",
-		"ro": "%s Flag-uri invalide.\n",
-		"es": "%s Flags inválidas.\n"
-	},
-	"invalid_immunity": {
-		"en": "%s Invalid immunity.\n",
-		"ro": "%s Imunitate invalidă.\n",
-		"es": "%s Inmunidad inválida.\n"
-	},
-	"invalid_map": {
-		"en": "%s Map '%s' is invalid. Please choose another one.",
-		"ro": "%s Harta '%s' este invalidă. Te rugăm să alegi o altă hartă.",
-		"es": "%s Mapa '%s' es inválido. Por favor elige otro."
-	},
-	"invalid_player": {
-		"en": "%s Player couldn't be found.\n",
-		"ro": "%s Nu am putut găsi jucătorul.\n",
-		"es": "%s No se pudo encontrar al jugador.\n"
-	},
-	"invalid_time": {
-		"en": "%s Invalid time. (%d-%d)",
-		"ro": "%s Timp invalid. (%d-%d)",
-		"es": "%s Tiempo inválido. (%d-%d)"
-	},
-	"is_not_an_admin": {
-		"en": "%s '%s' is not an admin.\n",
-		"ro": "%s '%s' nu este un admin.\n",
-		"es": "%s '%s' no es un administrador.\n"
-	},
 	"kick.message": {
 		"en": "%s %s kicked %s from server. Reason: %s\n",
 		"ro": "%s %s i-a dat kick lui %s de pe server. Motiv: %s\n",
@@ -143,11 +158,6 @@
 		"en": "%s Syntax: %skick <player> <reason>\n",
 		"ro": "%s Sintaxă: %skick <player> <motiv>\n",
 		"es": "%s Sintaxis: %skick <jugador> <razón>\n"
-	},
-	"minutes": {
-		"en": "%.2f minute(s)",
-		"ro": "%.2f minut(e)",
-		"es": "%.2f minuto(s)"
 	},
 	"mute.message": {
 		"en": "%s %s muted %s for %s. Reason: %s\n",
@@ -168,16 +178,6 @@
 		"en": "%s You are muted. Expires in: %s. Reason: %s",
 		"ro": "%s Ai primit mute. Expiră în: %s. Motiv: %s",
 		"es": "%s Estás silenciado. Expira en: %s. Razón: %s"
-	},
-	"never": {
-		"en": "Never",
-		"ro": "Niciodată",
-		"es": "Nunca"
-	},
-	"no_access": {
-		"en": "%s You don't have access to use this command.\n",
-		"ro": "%s Nu ai acces să folosești această comandă.\n",
-		"es": "%s No tienes acceso para usar este comando.\n"
 	},
 	"player_already_gagged": {
 		"en": "%s %s is already gagged.\n",
@@ -359,49 +359,59 @@
 		"es": "%s Sintaxis: %srg <tiempo>\n"
 	},
 	"rg.cancel": {
-		"en": "%s Round restart has been cancelled.\n",
-		"ro": "%s Restartul rundei a fost anulat.\n",
-		"es": "%s El reinicio de la ronda ha sido cancelado.\n"
+		"en": "%s Restart game has been cancelled.\n",
+		"ro": "%s Restartul jocului a fost anulat.\n",
+		"es": "%s El reinicio del juego ha sido cancelado.\n"
 	},
 	"rg.no_restart": {
-		"en": "%s There is no round restart in progress.\n",
-		"ro": "%s Nu există niciun restart de rundă în desfășurare.\n",
-		"es": "%s No hay reinicio de ronda en progreso.\n"
+		"en": "%s There is no game restart in progress.\n",
+		"ro": "%s Nu există niciun restart de joc în desfășurare.\n",
+		"es": "%s No hay reinicio de juego en progreso.\n"
 	},
 	"rg.message": {
-		"en": "%s %s has initiated a round restart. It will happen in %d second(s).\n",
-		"ro": "%s %s a inițiat un restart de rundă. Acesta va avea loc în %d secundă(e).\n",
-		"es": "%s %s ha iniciado un reinicio de ronda. Ocurrirá en %d segundo(s).\n"
+		"en": "%s %s has initiated a restart game. It will happen in %d second(s).\n",
+		"ro": "%s %s a inițiat un restart de joc. Acesta va avea loc în %d secundă(e).\n",
+		"es": "%s %s ha iniciado un reinicio de juego. Ocurrirá en %d segundo(s).\n"
 	},
 	"hp.syntax": {
-		"en": "%s Syntax: %shp <player> <health> [armor]\n",
-		"ro": "%s Sintaxă: %shp <player> <sănătate> [armură]\n",
-		"es": "%s Sintaxis: %shp <jugador> <salud> [armadura]\n"
+		"en": "%s Syntax: %shp <player> <health> [armor] [helmet]\n",
+		"ro": "%s Sintaxă: %shp <player> <sănătate> [armură] [coif]\n",
+		"es": "%s Sintaxis: %shp <jugador> <salud> [armadura] [casco]\n"
 	},
-	"hp.message1": {
+	"hp.message": {
 		"en": "%s %s has set %s's health to %d.\n",
 		"ro": "%s %s i-a setat sănătatea lui %s la %d.\n",
 		"es": "%s %s ha establecido la salud de %s a %d.\n"
 	},
-	"hp.message2": {
+	"hp.message_with_armor": {
 		"en": "%s %s has set %s's stats to [HP: %d | ARMOR: %d].\n",
 		"ro": "%s %s i-a setat statisticile lui %s la [HP: %d | ARMOR: %d].\n",
 		"es": "%s %s ha establecido las estadísticas de %s a [HP: %d | ARMOR: %d].\n"
 	},
-	"hp.message3": {
-		"en": "%s %s has set %s's stats to [HP: %d | ARMOR: %d | KEVLAR: %d].\n",
-		"ro": "%s %s i-a setat statisticile lui %s la [HP: %d | ARMOR: %d | KEVLAR: %d].\n",
-		"es": "%s %s ha establecido las estadísticas de %s a [HP: %d | ARMOR: %d | KEVLAR: %d].\n"
+	"hp.message_with_armor_and_helmet": {
+		"en": "%s %s has set %s's stats to [HP: %d | ARMOR: %d | HELMET: %d].\n",
+		"ro": "%s %s i-a setat statisticile lui %s la [HP: %d | ARMOR: %d | HELMET: %d].\n",
+		"es": "%s %s ha establecido las estadísticas de %s a [HP: %d | ARMOR: %d | HELMET: %d].\n"
 	},
 	"hp.invalid_health": {
 		"en": "%s Invalid health value. (%d-%d)\n",
 		"ro": "%s Valoare de sănătate invalidă. (%d-%d)\n",
 		"es": "%s Valor de salud inválido. (%d-%d)\n"
 	},
+	"hp.invalid_armor": {
+		"en": "%s Invalid armor value. (%d-%d)\n",
+		"ro": "%s Valoare de armură invalidă. (%d-%d)\n",
+		"es": "%s Valor de armadura inválido. (%d-%d)\n"
+	},
+	"hp.invalid_helmet": {
+		"en": "%s Invalid helmet value. (%d-%d)\n",
+		"ro": "%s Valoare de coif invalidă. (%d-%d)\n",
+		"es": "%s Valor de casco inválido. (%d-%d)\n"
+	},
 	"team.syntax": {
-		"en": "%s Syntax: %steam <player> <team>\n",
-		"ro": "%s Sintaxă: %steam <player> <echipă>\n",
-		"es": "%s Sintaxis: %steam <jugador> <equipo>\n"
+		"en": "%s Syntax: %steam <player> <CT/T/SPEC>\n",
+		"ro": "%s Sintaxă: %steam <player> <CT/T/SPEC>\n",
+		"es": "%s Sintaxis: %steam <jugador> <CT/T/SPEC>\n"
 	},
 	"team.invalid_team": {
 		"en": "%s Invalid team.\n",
@@ -414,9 +424,9 @@
 		"es": "%s %s ha movido a %s al equipo %s.\n"
 	},
 	"swap.syntax": {
-		"en": "%s Syntax: %sswap <player1> <player2>\n",
-		"ro": "%s Sintaxă: %sswap <player1> <player2>\n",
-		"es": "%s Sintaxis: %sswap <jugador1> <jugador2>\n"
+		"en": "%s Syntax: %sswap <player>\n",
+		"ro": "%s Sintaxă: %sswap <player>\n",
+		"es": "%s Sintaxis: %sswap <jugador>\n"
 	},
 	"swap.message": {
 		"en": "%s %s has team-swapped %s.\n",
@@ -587,5 +597,85 @@
 		"en": "%s %s has set %s's noclip to '%s'.\n",
 		"ro": "%s %s i-a setat lui %s noclip-ul la '%s'.\n",
 		"es": "%s %s ha establecido el noclip de %s a '%s'.\n"
+	},
+	"freeze.syntax": {
+		"en": "%s Syntax: %sfreeze <player>\n",
+		"ro": "%s Sintaxă: %sfreeze <player>\n",
+		"es": "%s Sintaxis: %sfreeze <jugador>\n"
+	},
+	"player_already_freezed": {
+		"en": "%s %s is already freezed.\n",
+		"ro": "%s %s este deja înghețat.\n",
+		"es": "%s %s ya está congelado.\n"
+	},
+	"freeze.message": {
+		"en": "%s %s has freezed %s.\n",
+		"ro": "%s %s a înghețat pe %s.\n",
+		"es": "%s %s ha congelado a %s.\n"
+	},
+	"unfreeze.syntax": {
+		"en": "%s Syntax: %sunfreeze <player>\n",
+		"ro": "%s Sintaxă: %sunfreeze <player>\n",
+		"es": "%s Sintaxis: %sunfreeze <jugador>\n"
+	},
+	"player_not_freezed": {
+		"en": "%s %s is not freezed.\n",
+		"ro": "%s %s nu este înghețat.\n",
+		"es": "%s %s no está congelado.\n"
+	},
+	"unfreeze.message": {
+		"en": "%s %s has unfreezed %s.\n",
+		"ro": "%s %s a dezghețat pe %s.\n",
+		"es": "%s %s ha descongelado a %s.\n"
+	},
+	"bury.syntax": {
+		"en": "%s Syntax: %sbury <player>\n",
+		"ro": "%s Sintaxă: %sbury <player>\n",
+		"es": "%s Sintaxis: %sbury <jugador>\n"
+	},
+	"bury.message": {
+		"en": "%s %s has buried %s.\n",
+		"ro": "%s %s a îngropat pe %s.\n",
+		"es": "%s %s ha enterrado a %s.\n"
+	},
+	"unbury.syntax": {
+		"en": "%s Syntax: %sunbury <player>\n",
+		"ro": "%s Sintaxă: %sunbury <player>\n",
+		"es": "%s Sintaxis: %sunbury <jugador>\n"
+	},
+	"unbury.message": {
+		"en": "%s %s has unburied %s.\n",
+		"ro": "%s %s a dezgropat pe %s.\n",
+		"es": "%s %s ha desenterrado a %s.\n"
+	},
+	"uslap.syntax": {
+		"en": "%s Syntax: %suslap <player> <times> [damage]\n",
+		"ro": "%s Sintaxă: %suslap <player> <ori> [daune]\n",
+		"es": "%s Sintaxis: %suslap <jugador> <veces> [daño]\n"
+	},
+	"uslap.invalid_times": {
+		"en": "%s Invalid slap times. (%d-%d)\n",
+		"ro": "%s Număr de slap-uri invalid. (%d-%d)\n",
+		"es": "%s Número de bofetadas inválido. (%d-%d)\n"
+	},
+	"uslap.invalid_damage": {
+		"en": "%s Invalid slap damage.\n",
+		"ro": "%s Daune de slap invalide.\n",
+		"es": "%s Daño de bofetada inválido.\n"
+	},
+	"uslap.message": {
+		"en": "%s %s has slapped %s %d times with %d damage.\n",
+		"ro": "%s %s a dat slap lui %s de %d ori cu %d daune.\n",
+		"es": "%s %s ha abofeteado a %s %d veces con %d de daño.\n"
+	},
+	"rename.syntax": {
+		"en": "%s Syntax: %srename <player> <name>\n",
+		"ro": "%s Sintaxă: %srename <player> <nume>\n",
+		"es": "%s Sintaxis: %srename <jugador> <nombre>\n"
+	},
+	"rename.message": {
+		"en": "%s %s has renamed %s to %s.\n",
+		"ro": "%s %s a redenumit pe %s la %s.\n",
+		"es": "%s %s ha renombrado a %s a %s.\n"
 	}
 }
