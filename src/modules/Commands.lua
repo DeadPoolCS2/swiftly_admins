@@ -1858,10 +1858,23 @@ commands:Register("uslap", function(playerid, args, argc, silent)
     end
 end)
 
---[[
-commands:Register("rename", function(playerid, args, argc, silent) -- wip
+commands:Register("rename", function(playerid, args, argc, silent)
     if playerid == -1 then
-        -- server logic
+        if argc < 2 then return print(string.format(FetchTranslation("admins.rename.syntax"), config:Fetch("admins.prefix"), "sw_", "NewName")) end
+
+        local targetid = GetPlayerId(args[1])
+        if targetid == -1 then return print(string.format(FetchTranslation("admins.invalid_player"), config:Fetch("admins.prefix"))) end
+
+        local target = GetPlayer(targetid)
+        if not target then return print(string.format(FetchTranslation("admins.player_not_connected"), config:Fetch("admins.prefix"), args[1])) end
+
+        local name = args[2]
+        if name == target:GetName() then return print(string.format(FetchTranslation("admins.rename.same_name"), config:Fetch("admins.prefix"), target:GetName())) end
+
+        target:SetName(name)
+
+        print(string.format(FetchTranslation("admins.rename.message"), config:Fetch("admins.prefix"), "CONSOLE", args[1], name))
+        playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.rename.message"), config:Fetch("admins.prefix"), "CONSOLE", args[1], name))
     else
         local player = GetPlayer(playerid)
         if not player then return end
@@ -1880,11 +1893,9 @@ commands:Register("rename", function(playerid, args, argc, silent) -- wip
         local name = args[2]
         if name == target:GetName() then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.rename.same_name"), config:Fetch("admins.prefix"), target:GetName())) end
 
-        target:SetName("1") -- remove previous name
         target:SetName(name)
 
         print(string.format(FetchTranslation("admins.rename.message"), config:Fetch("admins.prefix"), player:GetName(), args[1], name))
         playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.rename.message"), config:Fetch("admins.prefix"), player:GetName(), args[1], name))
     end
 end)
-]]
