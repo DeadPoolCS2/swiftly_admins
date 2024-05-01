@@ -536,9 +536,29 @@ commands:Register("slap", function(playerid, args, argc, silent)
         local target = GetPlayer(targetid)
         if not target then return print(string.format(FetchTranslation("admins.player_not_connected"), config:Fetch("admins.prefix"), args[1])) end
 
-        target:coords():Set(target:coords():Get() + vector3(0.0, 0.0, 25.0))
-        print(string.format(FetchTranslation("admins.slap.message"), config:Fetch("admins.prefix"), "CONSOLE", target:GetName()))
-        playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.slap.message"), config:Fetch("admins.prefix"), "CONSOLE", target:GetName()))
+        local vel = target:velocity():Get()
+        vel.x = vel.x + math.random(50, 230) * (math.random(0, 1) == 1 and -1 or 1)
+        vel.y = vel.y + math.random(50, 230) * (math.random(0, 1) == 1 and -1 or 1)
+        vel.z = vel.z + math.random(100, 300)
+
+        target:velocity():Set(vel)
+
+        if argc > 1 then
+            damage = tonumber(args[2])
+            target:health():Set(target:health():Get() - damage)
+            if target:health():Get() <= 0 then
+                target:Kill()
+            end
+            if damage < 0 then return print(string.format(FetchTranslation("admins.invalid_damage"), config:Fetch("admins.prefix"))) end
+        end
+        
+        if damage ~= nil then
+            print(string.format(FetchTranslation("admins.slap.message_with_damage"), config:Fetch("admins.prefix"), "CONSOLE", target:GetName(), damage))
+            playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.slap.message_with_damage"), config:Fetch("admins.prefix"), "CONSOLE", target:GetName(), damage))
+        else
+            print(string.format(FetchTranslation("admins.slap.message"), config:Fetch("admins.prefix"), "CONSOLE", target:GetName()))
+            playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.slap.message"), config:Fetch("admins.prefix"), "CONSOLE", target:GetName()))
+        end
     else
         local player = GetPlayer(playerid)
         if not player then return end
@@ -554,9 +574,29 @@ commands:Register("slap", function(playerid, args, argc, silent)
 
         if target:vars():Get("admin.immunity") > player:vars():Get("admin.immunity") then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.cannot_use_command"), config:Fetch("admins.prefix"))) end
 
-        target:coords():Set(target:coords():Get() + vector3(0.0, 0.0, 25.0))
-        print(string.format(FetchTranslation("admins.slap.message"), config:Fetch("admins.prefix"), player:GetName(), target:GetName()))
-        playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.slap.message"), config:Fetch("admins.prefix"), player:GetName(), target:GetName()))
+        local vel = target:velocity():Get()
+        vel.x = vel.x + math.random(50, 230) * (math.random(0, 1) == 1 and -1 or 1)
+        vel.y = vel.y + math.random(50, 230) * (math.random(0, 1) == 1 and -1 or 1)
+        vel.z = vel.z + math.random(100, 300)
+
+        target:velocity():Set(vel)
+
+        if argc > 1 then
+            damage = tonumber(args[2])
+            target:health():Set(target:health():Get() - damage)
+            if target:health():Get() <= 0 then
+                target:Kill()
+            end
+            if damage < 0 then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.invalid_damage"), config:Fetch("admins.prefix"))) end
+        end
+        
+        if damage ~= nil then
+            print(string.format(FetchTranslation("admins.slap.message_with_damage"), config:Fetch("admins.prefix"), player:GetName(), target:GetName(), damage))
+            playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.slap.message_with_damage"), config:Fetch("admins.prefix"), player:GetName(), target:GetName(), damage))
+        else
+            print(string.format(FetchTranslation("admins.slap.message"), config:Fetch("admins.prefix"), player:GetName(), target:GetName()))
+            playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.slap.message"), config:Fetch("admins.prefix"), player:GetName(), target:GetName()))
+        end
     end
 end)
 
@@ -571,7 +611,7 @@ commands:Register("ban", function(playerid, args, argc, silent)
         if not target then return print(string.format(FetchTranslation("admins.player_not_connected"), config:Fetch("admins.prefix"), args[1])) end
 
         local time = tonumber(args[2])
-        if time < 0 or time > 365 then return print(string.format(FetchTranslation("admins.invalid_time"), config:Fetch("admins.prefix"), 1, 365)) end
+        if time < 0 or time > 525600 then return print(string.format(FetchTranslation("admins.invalid_time"), config:Fetch("admins.prefix"), 1, 525600)) end
 
         table.remove(args, 1)
         table.remove(args, 1)
@@ -580,7 +620,7 @@ commands:Register("ban", function(playerid, args, argc, silent)
         print(string.format(FetchTranslation("admins.ban.message"), config:Fetch("admins.prefix"), "CONSOLE", target:GetName(), ComputeSanctionTime(time * 60), reason))
         playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.ban.message"), config:Fetch("admins.prefix"), "CONSOLE", target:GetName(), ComputeSanctionTime(time * 60), reason))
 
-        PerformBan(target:GetSteamID(), 0, time * 86400, reason)
+        PerformBan(target:GetSteamID(), 0, time * 60, reason)
         target:Drop(DisconnectReason.KickBanAdded)
     else
         local player = GetPlayer(playerid)
@@ -598,7 +638,7 @@ commands:Register("ban", function(playerid, args, argc, silent)
         if target:vars():Get("admin.immunity") > player:vars():Get("admin.immunity") then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.cannot_use_command"), config:Fetch("admins.prefix"))) end
 
         local time = tonumber(args[2])
-        if time < 0 or time > 365 then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.invalid_time"), config:Fetch("admins.prefix"), 1, 365)) end
+        if time < 0 or time > 525600 then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.invalid_time"), config:Fetch("admins.prefix"), 1, 525600)) end
 
         table.remove(args, 1)
         table.remove(args, 1)
@@ -607,7 +647,7 @@ commands:Register("ban", function(playerid, args, argc, silent)
         print(string.format(FetchTranslation("admins.ban.message"), config:Fetch("admins.prefix"), player:GetName(), target:GetName(), ComputeSanctionTime(time * 60), reason))
         playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.ban.message"), config:Fetch("admins.prefix"), player:GetName(), target:GetName(), ComputeSanctionTime(time * 60), reason))
 
-        PerformBan(target:GetSteamID(), player:GetSteamID(), time * 86400, reason)
+        PerformBan(target:GetSteamID(), player:GetSteamID(), time * 60, reason)
         target:Drop(DisconnectReason.KickBanAdded)
     end
 end)
@@ -661,4 +701,1229 @@ commands:Register("removeadmin", function(playerid, args, argc, silent)
     db:Query(string.format("delete from %s where steamid = '%s' limit 1", config:Fetch("admins.table_name.admins"), steamid))
     ReloadServerAdmins()
     print(string.format(FetchTranslation("admins.removeadmin.message"), config:Fetch("admins.prefix"), "CONSOLE", steamid))
+end)
+
+commands:Register("rr", function(playerid, args, argc, silent)
+    if playerid == -1 then
+        if argc > 1 then return print(string.format(FetchTranslation("admins.rr.syntax"), config:Fetch("admins.prefix"), "sw_")) end
+
+        local time = tonumber(args[1])
+        if time == nil then time = 1 end
+        if time == 0 then
+            if restart_round then
+                print(string.format(FetchTranslation("admins.rr.cancel"), config:Fetch("admins.prefix"), "CONSOLE"))
+                playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.rr.cancel"), config:Fetch("admins.prefix"), "CONSOLE"))
+                restart_round = false
+            else
+                print(string.format(FetchTranslation("admins.rr.no_restart"), config:Fetch("admins.prefix"), "CONSOLE"))
+                playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.rr.no_restart"), config:Fetch("admins.prefix"), "CONSOLE"))
+            end
+        else
+            print(string.format(FetchTranslation("admins.rr.message"), config:Fetch("admins.prefix"), "CONSOLE", time))
+            playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.rr.message"), config:Fetch("admins.prefix"), "CONSOLE", time))
+            restart_round = true
+            SetTimeout(time * 1000, function()
+                if restart_round then
+                    server:ExecuteCommand("sv_cheats 1; endround; sv_cheats 0;") -- Lazy way, but works.
+                    restart_round = false
+                end
+            end)
+        end
+    else
+        local player = GetPlayer(playerid)
+        if not player then return end
+
+        if not PlayerHasFlag(player, ADMFLAG_KICK) then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.no_access"), config:Fetch("admins.prefix"))) end
+        if argc > 1 then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.rr.syntax"), config:Fetch("admins.prefix"), GetPrefix(silent))) end
+
+        local time = tonumber(args[1])
+        if time == nil then time = 1 end
+        if time == 0 then
+            if restart_round then
+                print(string.format(FetchTranslation("admins.rr.cancel"), config:Fetch("admins.prefix"), player:GetName()))
+                playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.rr.cancel"), config:Fetch("admins.prefix"), player:GetName()))
+                restart_round = false
+            else
+                print(string.format(FetchTranslation("admins.rr.no_restart"), config:Fetch("admins.prefix"), player:GetName()))
+                playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.rr.no_restart"), config:Fetch("admins.prefix"), player:GetName()))
+            end
+        else
+            print(string.format(FetchTranslation("admins.rr.message"), config:Fetch("admins.prefix"), player:GetName(), time))
+            playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.rr.message"), config:Fetch("admins.prefix"), player:GetName(), time))
+            restart_round = true
+            SetTimeout(time * 1000, function()
+                if restart_round then
+                    server:ExecuteCommand("sv_cheats 1; endround; sv_cheats 0;") -- Lazy way, but works.
+                    restart_round = false
+                end
+            end)
+        end
+    end
+end)
+
+commands:Register("rg", function(playerid, args, argc, silent)
+    if playerid == -1 then
+        if argc > 1 then return print(string.format(FetchTranslation("admins.rg.syntax"), config:Fetch("admins.prefix"), "sw_")) end
+
+        local time = tonumber(args[1])
+        if time == nil then time = 1 end
+        if time == 0 then
+            if restart_game then
+                print(string.format(FetchTranslation("admins.rg.cancel"), config:Fetch("admins.prefix"), "CONSOLE"))
+                playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.rg.cancel"), config:Fetch("admins.prefix"), "CONSOLE"))
+                restart_game = false
+            else
+                print(string.format(FetchTranslation("admins.rg.no_restart"), config:Fetch("admins.prefix"), "CONSOLE"))
+                playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.rg.no_restart"), config:Fetch("admins.prefix"), "CONSOLE"))
+            end
+        else
+            print(string.format(FetchTranslation("admins.rg.message"), config:Fetch("admins.prefix"), "CONSOLE", time))
+            playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.rg.message"), config:Fetch("admins.prefix"), "CONSOLE", time))
+            restart_game = true
+            SetTimeout(time * 1000, function()
+                if restart_game then
+                    server:ExecuteCommand("mp_restartgame 1")
+                    restart_game = false
+                end
+            end)
+        end
+    else
+        local player = GetPlayer(playerid)
+        if not player then return end
+
+        if not PlayerHasFlag(player, ADMFLAG_KICK) then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.no_access"), config:Fetch("admins.prefix"))) end
+        if argc > 1 then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.rg.syntax"), config:Fetch("admins.prefix"), GetPrefix(silent))) end
+
+        local time = tonumber(args[1])
+        if time == nil then time = 1 end
+        if time == 0 then
+            if restart_game then
+                print(string.format(FetchTranslation("admins.rg.cancel"), config:Fetch("admins.prefix"), player:GetName()))
+                playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.rg.cancel"), config:Fetch("admins.prefix"), player:GetName()))
+                restart_game = false
+            else
+                print(string.format(FetchTranslation("admins.rg.no_restart"), config:Fetch("admins.prefix"), player:GetName()))
+                playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.rg.no_restart"), config:Fetch("admins.prefix"), player:GetName()))
+            end
+        else
+            print(string.format(FetchTranslation("admins.rg.message"), config:Fetch("admins.prefix"), player:GetName(), time))
+            playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.rg.message"), config:Fetch("admins.prefix"), player:GetName(), time))
+            restart_game = true
+            SetTimeout(time * 1000, function()
+                if restart_game then
+                    server:ExecuteCommand("mp_restartgame 1")
+                    restart_game = false
+                end
+            end)
+        end
+    end
+end)
+
+commands:Register("hp", function(playerid, args, argc, silent)
+    if playerid == -1 then
+        if argc < 2 or argc > 4 then return print(string.format(FetchTranslation("admins.hp.syntax"), config:Fetch("admins.prefix"), "sw_")) end
+
+        local targetid = GetPlayerId(args[1])
+        if targetid == -1 then return print(string.format(FetchTranslation("admins.invalid_player"), config:Fetch("admins.prefix"))) end
+
+        local target = GetPlayer(targetid)
+        if not target then return print(string.format(FetchTranslation("admins.player_not_connected"), config:Fetch("admins.prefix"), args[1])) end
+
+        if argc == 2 then
+            local health = tonumber(args[2])
+            if health == nil then return print(string.format(FetchTranslation("admins.hp.invalid_health"), config:Fetch("admins.prefix"))) end
+            if health < 0 or health > 999 then return print(string.format(FetchTranslation("admins.hp.invalid_health"), config:Fetch("admins.prefix"), 0, 999)) end
+
+            target:health():Set(health)
+            if health == 0 then target:Kill() end
+        
+            print(string.format(FetchTranslation("admins.hp.message"), config:Fetch("admins.prefix"), "CONSOLE", target:GetName(), health))
+            playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.hp.message"), config:Fetch("admins.prefix"), "CONSOLE", target:GetName(), health))
+
+            return
+        end
+
+        if argc == 3 then
+            local health = tonumber(args[2])
+            if health == nil then return print(string.format(FetchTranslation("admins.hp.invalid_health"), config:Fetch("admins.prefix"))) end
+            if health < 0 or health > 999 then return print(string.format(FetchTranslation("admins.hp.invalid_health"), config:Fetch("admins.prefix"), 0, 999)) end
+
+            local armor = tonumber(args[3])
+            if armor == nil then return print(string.format(FetchTranslation("admins.hp.invalid_armor"), config:Fetch("admins.prefix"))) end
+            if armor < 0 or armor > 999 then return print(string.format(FetchTranslation("admins.hp.invalid_armor"), config:Fetch("admins.prefix"), 0, 999)) end
+
+            target:health():Set(health)
+            if health == 0 then target:Kill() end
+            target:armor():Set(armor)
+        
+            print(string.format(FetchTranslation("admins.hp.message_with_armor"), config:Fetch("admins.prefix"), "CONSOLE", target:GetName(), health, armor))
+            playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.hp.message_with_armor"), config:Fetch("admins.prefix"), "CONSOLE", target:GetName(), health, armor))
+
+            return
+        end
+
+        if argc == 4 then
+            local health = tonumber(args[2])
+            if health == nil then return print(string.format(FetchTranslation("admins.hp.invalid_health"), config:Fetch("admins.prefix"))) end
+            if health < 0 or health > 999 then return print(string.format(FetchTranslation("admins.hp.invalid_health"), config:Fetch("admins.prefix"), 0, 999)) end
+
+            local armor = tonumber(args[3])
+            if armor == nil then return print(string.format(FetchTranslation("admins.hp.invalid_armor"), config:Fetch("admins.prefix"))) end
+            if armor < 0 or armor > 999 then return print(string.format(FetchTranslation("admins.hp.invalid_armor"), config:Fetch("admins.prefix"), 0, 999)) end
+
+            local helmet = tonumber(args[4])
+            if helmet == nil then return print(string.format(FetchTranslation("admins.hp.invalid_helmet"), config:Fetch("admins.prefix"), 0, 1)) end
+            if helmet < 0 or helmet > 1 then return print(string.format(FetchTranslation("admins.hp.invalid_helmet"), config:Fetch("admins.prefix"), 0, 1)) end
+
+            target:health():Set(health)
+            if health == 0 then target:Kill() end
+            target:armor():Set(armor)
+            if helmet == 1 then target:helmet():Give() else target:helmet():Remove() end
+            
+            print(string.format(FetchTranslation("admins.hp.message_with_armor_and_helmet"), config:Fetch("admins.prefix"), "CONSOLE", target:GetName(), health, armor, helmet))
+            playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.hp.message_with_armor_and_helmet"), config:Fetch("admins.prefix"), "CONSOLE", target:GetName(), health, armor, helmet))
+
+            return
+        end
+    else
+        local player = GetPlayer(playerid)
+        if not player then return end
+
+        if not PlayerHasFlag(player, ADMFLAG_SLAY) then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.no_access"), config:Fetch("admins.prefix"))) end
+        if argc < 2 or argc > 4 then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.hp.syntax"), config:Fetch("admins.prefix"), GetPrefix(silent))) end
+
+        local targetid = GetPlayerId(args[1])
+        if targetid == -1 then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.invalid_player"), config:Fetch("admins.prefix"))) end
+
+        local target = GetPlayer(targetid)
+        if not target then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.player_not_connected"), config:Fetch("admins.prefix"), args[1])) end
+
+        if target:vars():Get("admin.immunity") > player:vars():Get("admin.immunity") then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.cannot_use_command"), config:Fetch("admins.prefix"))) end
+
+        if argc == 2 then
+            local health = tonumber(args[2])
+            if health == nil then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.hp.invalid_health"), config:Fetch("admins.prefix"))) end
+            if health < 0 or health > 999 then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.hp.invalid_health"), config:Fetch("admins.prefix"), 0, 999)) end
+
+            target:health():Set(health)
+            if health == 0 then target:Kill() end
+        
+            print(string.format(FetchTranslation("admins.hp.message"), config:Fetch("admins.prefix"), player:GetName(), target:GetName(), health))
+            playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.hp.message"), config:Fetch("admins.prefix"), player:GetName(), target:GetName(), health))
+
+            return
+        end
+
+        if argc == 3 then
+            local health = tonumber(args[2])
+            if health == nil then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.hp.invalid_health"), config:Fetch("admins.prefix"))) end
+            if health < 0 or health > 999 then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.hp.invalid_health"), config:Fetch("admins.prefix"), 0, 999)) end
+
+            local armor = tonumber(args[3])
+            if armor == nil then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.hp.invalid_armor"), config:Fetch("admins.prefix"))) end
+            if armor < 0 or armor > 999 then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.hp.invalid_armor"), config:Fetch("admins.prefix"), 0, 999)) end
+
+            target:health():Set(health)
+            if health == 0 then target:Kill() end
+            target:armor():Set(armor)
+        
+            print(string.format(FetchTranslation("admins.hp.message_with_armor"), config:Fetch("admins.prefix"), player:GetName(), target:GetName(), health, armor))
+            playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.hp.message_with_armor"), config:Fetch("admins.prefix"), player:GetName(), target:GetName(), health, armor))
+
+            return
+        end
+
+        if argc == 4 then
+            local health = tonumber(args[2])
+            if health == nil then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.hp.invalid_health"), config:Fetch("admins.prefix"))) end
+            if health < 0 or health > 999 then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.hp.invalid_health"), config:Fetch("admins.prefix"), 0, 999)) end
+
+            local armor = tonumber(args[3])
+            if armor == nil then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.hp.invalid_armor"), config:Fetch("admins.prefix"))) end
+            if armor < 0 or armor > 999 then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.hp.invalid_armor"), config:Fetch("admins.prefix"), 0, 999)) end
+
+            local helmet = tonumber(args[4])
+            if helmet == nil then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.hp.invalid_helmet"), config:Fetch("admins.prefix"), 0, 1)) end
+            if helmet < 0 or helmet > 1 then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.hp.invalid_helmet"), config:Fetch("admins.prefix"), 0, 1)) end
+
+            target:health():Set(health)
+            if health == 0 then target:Kill() end
+            target:armor():Set(armor)
+            if helmet == 1 then target:helmet():Give() else target:helmet():Remove() end
+            
+            print(string.format(FetchTranslation("admins.hp.message_with_armor_and_helmet"), config:Fetch("admins.prefix"), player:GetName(), target:GetName(), health, armor, helmet))
+            playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.hp.message_with_armor_and_helmet"), config:Fetch("admins.prefix"), player:GetName(), target:GetName(), health, armor, helmet))
+
+            return
+        end
+    end
+end)
+
+commands:Register("team", function(playerid, args, argc, silent)
+    if playerid == -1 then
+        if argc < 2 then return print(string.format(FetchTranslation("admins.team.syntax"), config:Fetch("admins.prefix"), "sw_")) end
+
+        local targetid = GetPlayerId(args[1])
+        if targetid == -1 then return print(string.format(FetchTranslation("admins.invalid_player"), config:Fetch("admins.prefix"))) end
+
+        local target = GetPlayer(targetid)
+        if not target then return print(string.format(FetchTranslation("admins.player_not_connected"), config:Fetch("admins.prefix"), args[1])) end
+
+        local team = string.upper(args[2])
+        if team ~= "CT" and team ~= "T" and team ~= "SPEC" then return print(string.format(FetchTranslation("admins.team.invalid_team"), config:Fetch("admins.prefix"))) end
+
+        if team == "CT" then
+            target:team():Set(TEAM_CT)
+            target:Respawn()
+        elseif team == "T" then
+            target:team():Set(TEAM_T)
+            target:Respawn()
+        elseif team == "SPEC" then
+            target:Kill()
+            target:team():Set(TEAM_SPECTATOR)
+        end
+
+        print(string.format(FetchTranslation("admins.team.message"), config:Fetch("admins.prefix"), "CONSOLE", target:GetName(), team))
+        playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.team.message"), config:Fetch("admins.prefix"), "CONSOLE", target:GetName(), team))
+    else
+        local player = GetPlayer(playerid)
+        if not player then return end
+
+        if not PlayerHasFlag(player, ADMFLAG_GENERIC) then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.no_access"), config:Fetch("admins.prefix"))) end
+        if argc < 2 then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.team.syntax"), config:Fetch("admins.prefix"), GetPrefix(silent))) end
+
+        local targetid = GetPlayerId(args[1])
+        if targetid == -1 then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.invalid_player"), config:Fetch("admins.prefix"))) end
+
+        local target = GetPlayer(targetid)
+        if not target then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.player_not_connected"), config:Fetch("admins.prefix"), args[1])) end
+
+        if target:vars():Get("admin.immunity") > player:vars():Get("admin.immunity") then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.cannot_use_command"), config:Fetch("admins.prefix"))) end
+
+        local team = string.upper(args[2])
+        if team ~= "CT" and team ~= "T" and team ~= "SPEC" then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.team.invalid_team"), config:Fetch("admins.prefix"))) end
+
+        if team == "CT" then
+            target:team():Set(TEAM_CT)
+            target:Respawn()
+        elseif team == "T" then
+            target:team():Set(TEAM_T)
+            target:Respawn()
+        elseif team == "SPEC" then
+            target:Kill()
+            target:team():Set(TEAM_SPECTATOR)
+        end
+
+        print(string.format(FetchTranslation("admins.team.message"), config:Fetch("admins.prefix"), player:GetName(), target:GetName(), team))
+        playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.team.message"), config:Fetch("admins.prefix"), player:GetName(), target:GetName(), team))
+    end
+end)
+
+commands:Register("swap", function(playerid, args, argc, silent)
+    if playerid == -1 then
+        if argc < 1 or argc > 1 then return print(string.format(FetchTranslation("admins.swap.syntax"), config:Fetch("admins.prefix"), "sw_")) end
+
+        local targetid = GetPlayerId(args[1])
+        if targetid == -1 then return print(string.format(FetchTranslation("admins.invalid_player"), config:Fetch("admins.prefix"))) end
+
+        local target = GetPlayer(targetid)
+        if not target then return print(string.format(FetchTranslation("admins.player_not_connected"), config:Fetch("admins.prefix"), args[1])) end
+
+        if target:team():Get() == TEAM_CT then
+            target:team():Set(TEAM_T)
+            target:Respawn()
+        elseif target:team():Get() == TEAM_T then
+            target:team():Set(TEAM_CT)
+            target:Respawn()
+        end
+
+        print(string.format(FetchTranslation("admins.swap.message"), config:Fetch("admins.prefix"), "CONSOLE", target:GetName()))
+        playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.swap.message"), config:Fetch("admins.prefix"), "CONSOLE", target:GetName()))
+    else
+        local player = GetPlayer(playerid)
+        if not player then return end
+
+        if not PlayerHasFlag(player, ADMFLAG_GENERIC) then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.no_access"), config:Fetch("admins.prefix"))) end
+        if argc < 1 or argc > 1 then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.swap.syntax"), config:Fetch("admins.prefix"), GetPrefix(silent))) end
+
+        local targetid = GetPlayerId(args[1])
+        if targetid == -1 then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.invalid_player"), config:Fetch("admins.prefix"))) end
+
+        local target = GetPlayer(targetid)
+        if not target then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.player_not_connected"), config:Fetch("admins.prefix"), args[1])) end
+
+        if target:vars():Get("admin.immunity") > player:vars():Get("admin.immunity") then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.cannot_use_command"), config:Fetch("admins.prefix"))) end
+
+        if target:team():Get() == TEAM_CT then
+            target:team():Set(TEAM_T)
+            target:Respawn()
+        elseif target:team():Get() == TEAM_T then
+            target:team():Set(TEAM_CT)
+            target:Respawn()
+        end
+
+        print(string.format(FetchTranslation("admins.swap.message"), config:Fetch("admins.prefix"), player:GetName(), target:GetName()))
+        playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.swap.message"), config:Fetch("admins.prefix"), player:GetName(), target:GetName()))
+    end
+end)
+
+commands:Register("respawn", function(playerid, args, argc, silent)
+    if playerid == -1 then
+        if argc < 1 then return print(string.format(FetchTranslation("admins.respawn.syntax"), config:Fetch("admins.prefix"), "sw_")) end
+
+        local targetid = GetPlayerId(args[1])
+        if targetid == -1 then return print(string.format(FetchTranslation("admins.invalid_player"), config:Fetch("admins.prefix"))) end
+
+        local target = GetPlayer(targetid)
+        if not target then return print(string.format(FetchTranslation("admins.player_not_connected"), config:Fetch("admins.prefix"), args[1])) end
+
+        target:Respawn()
+        print(string.format(FetchTranslation("admins.respawn.message"), config:Fetch("admins.prefix"), "CONSOLE", target:GetName()))
+        playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.respawn.message"), config:Fetch("admins.prefix"), "CONSOLE", target:GetName()))
+    else
+        local player = GetPlayer(playerid)
+        if not player then return end
+
+        if not PlayerHasFlag(player, ADMFLAG_SLAY) then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.no_access"), config:Fetch("admins.prefix"))) end
+        if argc < 1 then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.respawn.syntax"), config:Fetch("admins.prefix"), GetPrefix(silent))) end
+
+        local targetid = GetPlayerId(args[1])
+        if targetid == -1 then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.invalid_player"), config:Fetch("admins.prefix"))) end
+
+        local target = GetPlayer(targetid)
+        if not target then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.player_not_connected"), config:Fetch("admins.prefix"), args[1])) end
+
+        if target:vars():Get("admin.immunity") > player:vars():Get("admin.immunity") then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.cannot_use_command"), config:Fetch("admins.prefix"))) end
+
+        target:Respawn()
+        print(string.format(FetchTranslation("admins.respawn.message"), config:Fetch("admins.prefix"), player:GetName(), target:GetName()))
+        playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.respawn.message"), config:Fetch("admins.prefix"), player:GetName(), target:GetName()))
+    end
+end)
+
+commands:Register("cc", function(playerid, args, argc, silent)
+    if playerid == -1 then
+        for i = 1, 20 do
+            playermanager:SendMsg(MessageType.Chat, " \x01\x0B \x0B ")
+        end
+        print(string.format(FetchTranslation("admins.cc.message"), config:Fetch("admins.prefix"), "CONSOLE"))
+        playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.cc.message"), config:Fetch("admins.prefix"), "CONSOLE"))
+    else
+        local player = GetPlayer(playerid)
+        if not player then return end
+
+        if not PlayerHasFlag(player, ADMFLAG_CHAT) then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.no_access"), config:Fetch("admins.prefix"))) end
+
+        for i = 1, 20 do
+            playermanager:SendMsg(MessageType.Chat, " \x01\x0B \x0B ", player)
+        end
+        print(string.format(FetchTranslation("admins.cc.message"), config:Fetch("admins.prefix"), player:GetName()))
+        playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.cc.message"), config:Fetch("admins.prefix"), player:GetName()))
+    end
+end)
+
+commands:Register("give", function(playerid, args, argc, silent)
+    if playerid == -1 then
+        if argc < 2 then return print(string.format(FetchTranslation("admins.give.syntax"), config:Fetch("admins.prefix"), "sw_")) end
+
+        local targetid = GetPlayerId(args[1])
+        if targetid == -1 then return print(string.format(FetchTranslation("admins.invalid_player"), config:Fetch("admins.prefix"))) end
+
+        local target = GetPlayer(targetid)
+        if not target then return print(string.format(FetchTranslation("admins.player_not_connected"), config:Fetch("admins.prefix"), args[1])) end
+
+        local weapon = args[2]
+        if not IsValidWeapon("weapon_" .. weapon) then return print(string.format(FetchTranslation("admins.give.invalid_weapon"), config:Fetch("admins.prefix"))) end
+
+        target:weapons():GiveWeapons("weapon_" .. weapon)
+        print(string.format(FetchTranslation("admins.give.message"), config:Fetch("admins.prefix"), "CONSOLE", target:GetName(), weapon))
+        playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.give.message"), config:Fetch("admins.prefix"), "CONSOLE", target:GetName(), weapon))
+    else
+        local player = GetPlayer(playerid)
+        if not player then return end
+
+        if not PlayerHasFlag(player, ADMFLAG_KICK) then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.no_access"), config:Fetch("admins.prefix"))) end
+
+        if argc < 2 then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.give.syntax"), config:Fetch("admins.prefix"), GetPrefix(silent))) end
+
+        local targetid = GetPlayerId(args[1])
+        if targetid == -1 then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.invalid_player"), config:Fetch("admins.prefix"))) end
+
+        local target = GetPlayer(targetid)
+        if not target then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.player_not_connected"), config:Fetch("admins.prefix"), args[1])) end
+
+        if target:vars():Get("admin.immunity") > player:vars():Get("admin.immunity") then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.cannot_use_command"), config:Fetch("admins.prefix"))) end
+
+        local weapon = args[2]
+        if not IsValidWeapon("weapon_" .. weapon) then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.give.invalid_weapon"), config:Fetch("admins.prefix"))) end
+
+        target:weapons():GiveWeapons("weapon_" .. weapon)
+        print(string.format(FetchTranslation("admins.give.message"), config:Fetch("admins.prefix"), player:GetName(), target:GetName(), weapon))
+        playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.give.message"), config:Fetch("admins.prefix"), player:GetName(), target:GetName(), weapon))
+    end
+end)
+
+commands:Register("giveitem", function(playerid, args, argc, silent)
+    if playerid == -1 then
+        if argc < 2 then return print(string.format(FetchTranslation("admins.giveitem.syntax"), config:Fetch("admins.prefix"), "sw_")) end
+
+        local targetid = GetPlayerId(args[1])
+        if targetid == -1 then return print(string.format(FetchTranslation("admins.invalid_player"), config:Fetch("admins.prefix"))) end
+
+        local target = GetPlayer(targetid)
+        if not target then return print(string.format(FetchTranslation("admins.player_not_connected"), config:Fetch("admins.prefix"), args[1])) end
+
+        local item = args[2]
+        if not IsValidItem("item_" .. item) then return print(string.format(FetchTranslation("admins.giveitem.invalid_item"), config:Fetch("admins.prefix"))) end
+
+        target:weapons():GiveWeapons("item_" .. item)
+        print(string.format(FetchTranslation("admins.giveitem.message"), config:Fetch("admins.prefix"), "CONSOLE", target:GetName(), item))
+        playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.giveitem.message"), config:Fetch("admins.prefix"), "CONSOLE", target:GetName(), item))
+    else
+        local player = GetPlayer(playerid)
+        if not player then return end
+
+        if not PlayerHasFlag(player, ADMFLAG_KICK) then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.no_access"), config:Fetch("admins.prefix"))) end
+
+        if argc < 2 then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.giveitem.syntax"), config:Fetch("admins.prefix"), GetPrefix(silent))) end
+
+        local targetid = GetPlayerId(args[1])
+        if targetid == -1 then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.invalid_player"), config:Fetch("admins.prefix"))) end
+
+        local target = GetPlayer(targetid)
+        if not target then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.player_not_connected"), config:Fetch("admins.prefix"), args[1])) end
+
+        if target:vars():Get("admin.immunity") > player:vars():Get("admin.immunity") then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.cannot_use_command"), config:Fetch("admins.prefix"))) end
+
+        local item = args[2]
+        if not IsValidItem("item_" .. item) then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.giveitem.invalid_item"), config:Fetch("admins.prefix"))) end
+
+        target:weapons():GiveWeapons("item_" .. item)
+        print(string.format(FetchTranslation("admins.giveitem.message"), config:Fetch("admins.prefix"), player:GetName(), target:GetName(), item))
+        playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.giveitem.message"), config:Fetch("admins.prefix"), player:GetName(), target:GetName(), item))
+    end
+end)
+
+commands:Register("melee", function(playerid, args, argc, silent)
+    if playerid == -1 then
+        if argc < 1 then return print(string.format(FetchTranslation("admins.melee.syntax"), config:Fetch("admins.prefix"), "sw_")) end
+
+        local targetid = GetPlayerId(args[1])
+        if targetid == -1 then return print(string.format(FetchTranslation("admins.invalid_player"), config:Fetch("admins.prefix"))) end
+
+        local target = GetPlayer(targetid)
+        if not target then return print(string.format(FetchTranslation("admins.player_not_connected"), config:Fetch("admins.prefix"), args[1])) end
+
+        target:weapons():RemoveWeapons()
+        print(string.format(FetchTranslation("admins.melee.message"), config:Fetch("admins.prefix"), "CONSOLE", target:GetName()))
+        playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.melee.message"), config:Fetch("admins.prefix"), "CONSOLE", target:GetName()))
+    else
+        local player = GetPlayer(playerid)
+        if not player then return end
+
+        if not PlayerHasFlag(player, ADMFLAG_KICK) then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.no_access"), config:Fetch("admins.prefix"))) end
+
+        if argc < 1 then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.melee.syntax"), config:Fetch("admins.prefix"), GetPrefix(silent))) end
+
+        local targetid = GetPlayerId(args[1])
+        if targetid == -1 then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.invalid_player"), config:Fetch("admins.prefix"))) end
+
+        local target = GetPlayer(targetid)
+        if not target then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.player_not_connected"), config:Fetch("admins.prefix"), args[1])) end
+
+        if target:vars():Get("admin.immunity") > player:vars():Get("admin.immunity") then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.cannot_use_command"), config:Fetch("admins.prefix"))) end
+
+        target:weapons():RemoveWeapons()
+        print(string.format(FetchTranslation("admins.melee.message"), config:Fetch("admins.prefix"), player:GetName(), target:GetName()))
+        playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.melee.message"), config:Fetch("admins.prefix"), player:GetName(), target:GetName()))
+    end
+end)
+
+commands:Register("disarm", function(playerid, args, argc, silent)
+    if playerid == -1 then
+        if argc < 1 then return print(string.format(FetchTranslation("admins.disarm.syntax"), config:Fetch("admins.prefix"), "sw_")) end
+
+        local targetid = GetPlayerId(args[1])
+        if targetid == -1 then return print(string.format(FetchTranslation("admins.invalid_player"), config:Fetch("admins.prefix"))) end
+
+        local target = GetPlayer(targetid)
+        if not target then return print(string.format(FetchTranslation("admins.player_not_connected"), config:Fetch("admins.prefix"), args[1])) end
+
+        target:weapons():RemoveWeapons()
+        print(string.format(FetchTranslation("admins.disarm.message"), config:Fetch("admins.prefix"), "CONSOLE", target:GetName()))
+        playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.disarm.message"), config:Fetch("admins.prefix"), "CONSOLE", target:GetName()))
+    else
+        local player = GetPlayer(playerid)
+        if not player then return end
+
+        if not PlayerHasFlag(player, ADMFLAG_KICK) then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.no_access"), config:Fetch("admins.prefix"))) end
+
+        if argc < 1 then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.disarm.syntax"), config:Fetch("admins.prefix"), GetPrefix(silent))) end
+
+        local targetid = GetPlayerId(args[1])
+        if targetid == -1 then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.invalid_player"), config:Fetch("admins.prefix"))) end
+
+        local target = GetPlayer(targetid)
+        if not target then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.player_not_connected"), config:Fetch("admins.prefix"), args[1])) end
+
+        if target:vars():Get("admin.immunity") > player:vars():Get("admin.immunity") then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.cannot_use_command"), config:Fetch("admins.prefix"))) end
+
+        target:weapons():RemoveWeapons()
+        local currentweapon = player:weapons():GetWeaponFromSlot(WeaponSlot.CurrentWeapon)
+        if currentweapon then
+            currentweapon:Remove()
+        end
+        print(string.format(FetchTranslation("admins.disarm.message"), config:Fetch("admins.prefix"), player:GetName(), target:GetName()))
+        playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.disarm.message"), config:Fetch("admins.prefix"), player:GetName(), target:GetName()))
+    end
+end)
+
+commands:Register("xyz", function(playerid, args, argc, silent)
+    if playerid == -1 then
+        if argc > 1 then return print(string.format(FetchTranslation("admins.xyz.syntax.server"), config:Fetch("admins.prefix"), "sw_")) end
+
+        local targetid = GetPlayerId(args[1])
+        if targetid == -1 then return print(string.format(FetchTranslation("admins.invalid_player"), config:Fetch("admins.prefix"))) end
+
+        local target = GetPlayer(targetid)
+        if not target then return print(string.format(FetchTranslation("admins.player_not_connected"), config:Fetch("admins.prefix"), args[1])) end
+
+        local position = target:coords():Get()
+        print(string.format(FetchTranslation("admins.xyz.message.server"), config:Fetch("admins.prefix"), target:GetName(), position.x, position.y, position.z))
+    else
+        local player = GetPlayer(playerid)
+        if not player then return end
+
+        if not PlayerHasFlag(player, ADMFLAG_GENERIC) then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.no_access"), config:Fetch("admins.prefix"))) end
+
+        if argc > 0 then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.xyz.syntax.client"), config:Fetch("admins.prefix"), GetPrefix(silent))) end
+
+        local position = player:coords():Get()
+        player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.xyz.message.client"), config:Fetch("admins.prefix"), position.x, position.y, position.z))
+    end
+end)
+
+--[[ event hooked is temporary disabled so the command is disabled as well :D
+commands:Register("god", function(playerid, args, argc, silent)
+    if playerid == -1 then
+        if argc < 1 then return print(string.format(FetchTranslation("admins.god.syntax"), config:Fetch("admins.prefix"), "sw_")) end
+
+        local targetid = GetPlayerId(args[1])
+        if targetid == -1 then return print(string.format(FetchTranslation("admins.invalid_player"), config:Fetch("admins.prefix"))) end
+
+        local target = GetPlayer(targetid)
+        if not target then return print(string.format(FetchTranslation("admins.player_not_connected"), config:Fetch("admins.prefix"), args[1])) end
+
+        if target:vars():Get("godmode") == 1 then
+            target:vars():Set("godmode", 0)
+            print(string.format(FetchTranslation("admins.god.message"), config:Fetch("admins.prefix"), "CONSOLE", target:GetName(), FetchTranslation("admins.disabled")))
+            playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.god.message"), config:Fetch("admins.prefix"), "CONSOLE", target:GetName(), FetchTranslation("admins.disabled")))
+        else
+            target:vars():Set("godmode", 1)
+            print(string.format(FetchTranslation("admins.god.message"), config:Fetch("admins.prefix"), "CONSOLE", target:GetName(), FetchTranslation("admins.enabled")))
+            playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.god.message"), config:Fetch("admins.prefix"), "CONSOLE", target:GetName(), FetchTranslation("admins.enabled")))
+        end
+    else
+        local player = GetPlayer(playerid)
+        if not player then return end
+
+        if not PlayerHasFlag(player, ADMFLAG_KICK) then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.no_access"), config:Fetch("admins.prefix"))) end
+        if argc < 1 then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.god.syntax"), config:Fetch("admins.prefix"), GetPrefix(silent))) end
+
+        local targetid = GetPlayerId(args[1])
+        if targetid == -1 then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.invalid_player"), config:Fetch("admins.prefix"))) end
+
+        local target = GetPlayer(targetid)
+        if not target then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.player_not_connected"), config:Fetch("admins.prefix"), args[1])) end
+
+        if target:vars():Get("godmode") == 1 then
+            target:vars():Set("godmode", 0)
+            print(string.format(FetchTranslation("admins.god.message"), config:Fetch("admins.prefix"), player:GetName(), target:GetName(), FetchTranslation("admins.disabled")))
+            playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.god.message"), config:Fetch("admins.prefix"), player:GetName(), target:GetName(), FetchTranslation("admins.disabled")))
+        else
+            target:vars():Set("godmode", 1)
+            print(string.format(FetchTranslation("admins.god.message"), config:Fetch("admins.prefix"), player:GetName(), target:GetName(), FetchTranslation("admins.enabled")))
+            playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.god.message"), config:Fetch("admins.prefix"), player:GetName(), target:GetName(), FetchTranslation("admins.enabled")))
+        end
+    end
+end)
+]]
+
+commands:Register("armor", function(playerid, args, argc, silent)
+    if playerid == -1 then
+        if argc < 2 then return print(string.format(FetchTranslation("admins.armor.syntax"), config:Fetch("admins.prefix"), "sw_")) end
+
+        local targetid = GetPlayerId(args[1])
+        if targetid == -1 then return print(string.format(FetchTranslation("admins.invalid_player"), config:Fetch("admins.prefix"))) end
+
+        local target = GetPlayer(targetid)
+        if not target then return print(string.format(FetchTranslation("admins.player_not_connected"), config:Fetch("admins.prefix"), args[1])) end
+
+        local armor = tonumber(args[2])
+        if armor < 0 or armor > 999 then return print(string.format(FetchTranslation("admins.armor.invalid_armor"), config:Fetch("admins.prefix"), 0, 999)) end
+
+        target:armor():Set(armor)
+        print(string.format(FetchTranslation("admins.armor.message"), config:Fetch("admins.prefix"), "CONSOLE", target:GetName(), armor))
+        playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.armor.message"), config:Fetch("admins.prefix"), "CONSOLE", target:GetName(), armor))
+    else
+        local player = GetPlayer(playerid)
+        if not player then return end
+
+        if not PlayerHasFlag(player, ADMFLAG_KICK) then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.no_access"), config:Fetch("admins.prefix"))) end
+        if argc < 2 then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.armor.syntax"), config:Fetch("admins.prefix"), GetPrefix(silent))) end
+
+        local targetid = GetPlayerId(args[1])
+        if targetid == -1 then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.invalid_player"), config:Fetch("admins.prefix"))) end
+
+        local target = GetPlayer(targetid)
+        if not target then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.player_not_connected"), config:Fetch("admins.prefix"), args[1])) end
+
+        if target:vars():Get("admin.immunity") > player:vars():Get("admin.immunity") then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.cannot_use_command"), config:Fetch("admins.prefix"))) end
+
+        local armor = tonumber(args[2])
+        if armor < 0 or armor > 999 then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.armor.invalid_armor"), config:Fetch("admins.prefix"), 0, 999)) end
+
+        target:armor():Set(armor)
+        print(string.format(FetchTranslation("admins.armor.message"), config:Fetch("admins.prefix"), player:GetName(), target:GetName(), armor))
+        playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.armor.message"), config:Fetch("admins.prefix"), player:GetName(), target:GetName(), armor))
+    end
+end)
+
+commands:Register("1up", function(playerid, args, argc, silent)
+    if playerid == -1 then
+        if argc < 1 then return print(string.format(FetchTranslation("admins.1up.syntax"), config:Fetch("admins.prefix"), "sw_")) end
+
+        local targetid = GetPlayerId(args[1])
+        if targetid == -1 then return print(string.format(FetchTranslation("admins.invalid_player"), config:Fetch("admins.prefix"))) end
+
+        local target = GetPlayer(targetid)
+        if not target then return print(string.format(FetchTranslation("admins.player_not_connected"), config:Fetch("admins.prefix"), args[1])) end
+
+        local position = target:vars():Get("deathposition")
+        if position == "nil" then return print(string.format(FetchTranslation("admins.1up.no_death_position"), config:Fetch("admins.prefix"), target:GetName())) end
+
+        target:Respawn()
+
+        NextTick(function()
+            target:coords():Set(toVector3(position))
+        end)
+
+        print(string.format(FetchTranslation("admins.1up.message"), config:Fetch("admins.prefix"), "CONSOLE", target:GetName()))
+        playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.1up.message"), config:Fetch("admins.prefix"), "CONSOLE", target:GetName()))
+    else
+        local player = GetPlayer(playerid)
+        if not player then return end
+
+        if not PlayerHasFlag(player, ADMFLAG_SLAY) then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.no_access"), config:Fetch("admins.prefix"))) end
+
+        if argc < 1 then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.1up.syntax"), config:Fetch("admins.prefix"), GetPrefix(silent))) end
+
+        local targetid = GetPlayerId(args[1])
+        if targetid == -1 then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.invalid_player"), config:Fetch("admins.prefix"))) end
+
+        local target = GetPlayer(targetid)
+        if not target then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.player_not_connected"), config:Fetch("admins.prefix"), args[1])) end
+
+        if target:vars():Get("admin.immunity") > player:vars():Get("admin.immunity") then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.cannot_use_command"), config:Fetch("admins.prefix"))) end
+
+        local position = target:vars():Get("deathposition")
+        if position == "nil" then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.1up.no_death_position"), config:Fetch("admins.prefix"), target:GetName())) end
+
+        target:Respawn()
+
+        NextTick(function()
+            target:coords():Set(toVector3(position))
+        end)
+        
+        print(string.format(FetchTranslation("admins.1up.message"), config:Fetch("admins.prefix"), player:GetName(), target:GetName()))
+        playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.1up.message"), config:Fetch("admins.prefix"), player:GetName(), target:GetName()))
+    end
+end)
+
+commands:Register("tele", function(playerid, args, argc, silent)
+    if playerid == -1 then
+        if argc < 2 then return print(string.format(FetchTranslation("admins.tele.syntax"), config:Fetch("admins.prefix"), "sw_")) end
+
+        local targetid_A = GetPlayerId(args[1])
+        if targetid_A == -1 then return print(string.format(FetchTranslation("admins.invalid_player"), config:Fetch("admins.prefix"))) end
+
+        local targetid_B = GetPlayerId(args[2])
+        if targetid_B == -1 then return print(string.format(FetchTranslation("admins.invalid_player"), config:Fetch("admins.prefix"))) end
+
+        local target_A = GetPlayer(targetid_A)
+        if not target_A then return print(string.format(FetchTranslation("admins.player_not_connected"), config:Fetch("admins.prefix"), args[1])) end
+
+        local target_B = GetPlayer(targetid_B)
+        if not target_B then return print(string.format(FetchTranslation("admins.player_not_connected"), config:Fetch("admins.prefix"), args[2])) end
+
+        local position = target_B:coords():Get()
+        
+        target_A:coords():Set(position + vector3(0, 0, 100))
+
+        print(string.format(FetchTranslation("admins.tele.message"), config:Fetch("admins.prefix"), "CONSOLE", target_A:GetName(), target_B:GetName()))
+        playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.tele.message"), config:Fetch("admins.prefix"), "CONSOLE", target_A:GetName(), target_B:GetName()))
+    else
+        player = GetPlayer(playerid)
+        if not player then return end
+
+        if not PlayerHasFlag(player, ADMFLAG_KICK) then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.no_access"), config:Fetch("admins.prefix"))) end
+
+        if argc < 2 then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.tele.syntax"), config:Fetch("admins.prefix"), GetPrefix(silent))) end
+
+        local targetid_A = GetPlayerId(args[1])
+        if targetid_A == -1 then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.invalid_player"), config:Fetch("admins.prefix"))) end
+
+        local targetid_B = GetPlayerId(args[2])
+        if targetid_B == -1 then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.invalid_player"), config:Fetch("admins.prefix"))) end
+
+        local target_A = GetPlayer(targetid_A)
+        if not target_A then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.player_not_connected"), config:Fetch("admins.prefix"), args[1])) end
+
+        local target_B = GetPlayer(targetid_B)
+        if not target_B then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.player_not_connected"), config:Fetch("admins.prefix"), args[2])) end
+
+        if target_A:vars():Get("admin.immunity") > player:vars():Get("admin.immunity") or target_B:vars():Get("admin.immunity") > player:vars():Get("admin.immunity") then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.cannot_use_command"), config:Fetch("admins.prefix"))) end
+
+        local position = target_B:coords():Get()
+        
+        target_A:coords():Set(position + vector3(0, 0, 100))
+
+        print(string.format(FetchTranslation("admins.tele.message"), config:Fetch("admins.prefix"), player:GetName(), target_A:GetName(), target_B:GetName()))
+        playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.tele.message"), config:Fetch("admins.prefix"), player:GetName(), target_A:GetName(), target_B:GetName()))
+    end
+end)
+
+commands:Register("bring", function(playerid, args, argc, silent)
+    if playerid == -1 then
+        if argc < 1 then return print(string.format(FetchTranslation("admins.bring.syntax"), config:Fetch("admins.prefix"), "sw_")) end
+
+        local targetid = GetPlayerId(args[1])
+        if targetid == -1 then return print(string.format(FetchTranslation("admins.invalid_player"), config:Fetch("admins.prefix"))) end
+
+        local target = GetPlayer(targetid)
+        if not target then return print(string.format(FetchTranslation("admins.player_not_connected"), config:Fetch("admins.prefix"), args[1])) end
+
+        local position = GetPlayer(playerid):coords():Get()
+        
+        target:coords():Set(position + vector3(0, 0, 300))
+
+        print(string.format(FetchTranslation("admins.bring.message"), config:Fetch("admins.prefix"), "CONSOLE", target:GetName()))
+        playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.bring.message"), config:Fetch("admins.prefix"), "CONSOLE", target:GetName()))
+    else
+        player = GetPlayer(playerid)
+        if not player then return end
+
+        if not PlayerHasFlag(player, ADMFLAG_KICK) then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.no_access"), config:Fetch("admins.prefix"))) end
+
+        if argc < 1 then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.bring.syntax"), config:Fetch("admins.prefix"), GetPrefix(silent))) end
+
+        local targetid = GetPlayerId(args[1])
+        if targetid == -1 then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.invalid_player"), config:Fetch("admins.prefix"))) end
+
+        local target = GetPlayer(targetid)
+        if not target then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.player_not_connected"), config:Fetch("admins.prefix"), args[1])) end
+
+        if target:vars():Get("admin.immunity") > player:vars():Get("admin.immunity") then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.cannot_use_command"), config:Fetch("admins.prefix"))) end
+
+        local position = player:coords():Get()
+        
+        target:coords():Set(position + vector3(0, 0, 300))
+
+        print(string.format(FetchTranslation("admins.bring.message"), config:Fetch("admins.prefix"), player:GetName(), target:GetName()))
+        playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.bring.message"), config:Fetch("admins.prefix"), player:GetName(), target:GetName()))
+    end
+end)
+
+commands:Register("goto", function(playerid, args, argc, silent)
+    if playerid == -1 then
+        if argc < 1 then return print(string.format(FetchTranslation("admins.goto.syntax"), config:Fetch("admins.prefix"), "sw_")) end
+
+        local targetid = GetPlayerId(args[1])
+        if targetid == -1 then return print(string.format(FetchTranslation("admins.invalid_player"), config:Fetch("admins.prefix"))) end
+
+        local target = GetPlayer(targetid)
+        if not target then return print(string.format(FetchTranslation("admins.player_not_connected"), config:Fetch("admins.prefix"), args[1])) end
+
+        local position = target:coords():Get()
+        
+        GetPlayer(playerid):coords():Set(position + vector3(0, 0, 100))
+
+        print(string.format(FetchTranslation("admins.goto.message"), config:Fetch("admins.prefix"), "CONSOLE", GetPlayer(playerid):GetName(), target:GetName()))
+        playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.goto.message"), config:Fetch("admins.prefix"), "CONSOLE", GetPlayer(playerid):GetName(), target:GetName()))
+    else
+        player = GetPlayer(playerid)
+        if not player then return end
+
+        if not PlayerHasFlag(player, ADMFLAG_KICK) then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.no_access"), config:Fetch("admins.prefix"))) end
+
+        if argc < 1 then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.goto.syntax"), config:Fetch("admins.prefix"), GetPrefix(silent))) end
+
+        local targetid = GetPlayerId(args[1])
+        if targetid == -1 then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.invalid_player"), config:Fetch("admins.prefix"))) end
+
+        local target = GetPlayer(targetid)
+        if not target then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.player_not_connected"), config:Fetch("admins.prefix"), args[1])) end
+
+        if target:vars():Get("admin.immunity") > player:vars():Get("admin.immunity") then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.cannot_use_command"), config:Fetch("admins.prefix"))) end
+
+        local position = target:coords():Get()
+
+        player:coords():Set(position + vector3(0, 0, 100))
+
+        print(string.format(FetchTranslation("admins.goto.message"), config:Fetch("admins.prefix"), player:GetName(), GetPlayer(playerid):GetName(), target:GetName()))
+        playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.goto.message"), config:Fetch("admins.prefix"), player:GetName(), GetPlayer(playerid):GetName(), target:GetName()))
+    end
+end)
+
+commands:Register("noclip", function(playerid, args, argc, silent)
+    if playerid == -1 then
+        if argc < 1 then return print(string.format(FetchTranslation("admins.noclip.syntax"), config:Fetch("admins.prefix"), "sw_")) end
+
+        local targetid = GetPlayerId(args[1])
+        if targetid == -1 then return print(string.format(FetchTranslation("admins.invalid_player"), config:Fetch("admins.prefix"))) end
+
+        local target = GetPlayer(targetid)
+        if not target then return print(string.format(FetchTranslation("admins.player_not_connected"), config:Fetch("admins.prefix"), args[1])) end
+
+        if target:vars():Get("noclip") == 1 then
+            target:vars():Set("noclip", 0)
+            target:SetActualMoveType(MoveType_t.MOVETYPE_WALK)
+            print(string.format(FetchTranslation("admins.noclip.message"), config:Fetch("admins.prefix"), "CONSOLE", target:GetName(), FetchTranslation("admins.disabled")))
+            playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.noclip.message"), config:Fetch("admins.prefix"), "CONSOLE", target:GetName(), FetchTranslation("admins.disabled")))
+        else
+            target:vars():Set("noclip", 1)
+            target:SetActualMoveType(MoveType_t.MOVETYPE_NOCLIP)
+            print(string.format(FetchTranslation("admins.noclip.message"), config:Fetch("admins.prefix"), "CONSOLE", target:GetName(), FetchTranslation("admins.enabled")))
+            playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.noclip.message"), config:Fetch("admins.prefix"), "CONSOLE", target:GetName(), FetchTranslation("admins.enabled")))
+        end
+    else
+        local player = GetPlayer(playerid)
+        if not player then return end
+
+        if not PlayerHasFlag(player, ADMFLAG_KICK) then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.no_access"), config:Fetch("admins.prefix"))) end
+        if argc < 1 then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.noclip.syntax"), config:Fetch("admins.prefix"), GetPrefix(silent))) end
+
+        local targetid = GetPlayerId(args[1])
+        if targetid == -1 then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.invalid_player"), config:Fetch("admins.prefix"))) end
+
+        local target = GetPlayer(targetid)
+        if not target then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.player_not_connected"), config:Fetch("admins.prefix"), args[1])) end
+
+        if target:vars():Get("admin.immunity") > player:vars():Get("admin.immunity") then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.cannot_use_command"), config:Fetch("admins.prefix"))) end
+
+        if target:vars():Get("noclip") == 1 then
+            target:vars():Set("noclip", 0)
+            target:SetActualMoveType(MoveType_t.MOVETYPE_WALK)
+            print(string.format(FetchTranslation("admins.noclip.message"), config:Fetch("admins.prefix"), player:GetName(), target:GetName(), FetchTranslation("admins.disabled")))
+            playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.noclip.message"), config:Fetch("admins.prefix"), player:GetName(), target:GetName(), FetchTranslation("admins.disabled")))
+        else
+            target:vars():Set("noclip", 1)
+            target:SetActualMoveType(MoveType_t.MOVETYPE_NOCLIP)
+            print(string.format(FetchTranslation("admins.noclip.message"), config:Fetch("admins.prefix"), player:GetName(), target:GetName(), FetchTranslation("admins.enabled")))
+            playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.noclip.message"), config:Fetch("admins.prefix"), player:GetName(), target:GetName(), FetchTranslation("admins.enabled")))
+        end
+    end
+end)
+
+commands:Register("freeze", function(playerid, args, argc, silent)
+    if playerid == -1 then
+        if argc < 1 then return print(string.format(FetchTranslation("admins.freeze.syntax"), config:Fetch("admins.prefix"), "sw_")) end
+
+        local targetid = GetPlayerId(args[1])
+        if targetid == -1 then return print(string.format(FetchTranslation("admins.invalid_player"), config:Fetch("admins.prefix"))) end
+
+        local target = GetPlayer(targetid)
+        if not target then return print(string.format(FetchTranslation("admins.player_not_connected"), config:Fetch("admins.prefix"), args[1])) end
+
+        if target:vars():Get("freeze") == 1 then
+            print(string.format(FetchTranslation("admins.player_already_freezed"), config:Fetch("admins.prefix"), "CONSOLE", target:GetName()))
+            playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.player_already_freezed"), config:Fetch("admins.prefix"), "CONSOLE", target:GetName()))
+        else
+            target:vars():Set("freeze", 1)
+            target:SetActualMoveType(MoveType_t.MOVETYPE_NONE)
+            print(string.format(FetchTranslation("admins.freeze.message"), config:Fetch("admins.prefix"), "CONSOLE", target:GetName()))
+            playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.freeze.message"), config:Fetch("admins.prefix"), "CONSOLE", target:GetName()))
+        end
+    else
+        local player = GetPlayer(playerid)
+        if not player then return end
+
+        if not PlayerHasFlag(player, ADMFLAG_SLAY) then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.no_access"), config:Fetch("admins.prefix"))) end
+        if argc < 1 then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.freeze.syntax"), config:Fetch("admins.prefix"), GetPrefix(silent))) end
+
+        local targetid = GetPlayerId(args[1])
+        if targetid == -1 then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.invalid_player"), config:Fetch("admins.prefix"))) end
+
+        local target = GetPlayer(targetid)
+        if not target then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.player_not_connected"), config:Fetch("admins.prefix"), args[1])) end
+
+        if target:vars():Get("admin.immunity") > player:vars():Get("admin.immunity") then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.cannot_use_command"), config:Fetch("admins.prefix"))) end
+
+        if target:vars():Get("freeze") == 1 then
+            print(string.format(FetchTranslation("admins.player_already_freezed"), config:Fetch("admins.prefix"), player:GetName(), target:GetName()))
+            playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.player_already_freezed"), config:Fetch("admins.prefix"), player:GetName(), target:GetName()))
+        else
+            target:vars():Set("freeze", 1)
+            target:SetActualMoveType(MoveType_t.MOVETYPE_NONE)
+            print(string.format(FetchTranslation("admins.freeze.message"), config:Fetch("admins.prefix"), player:GetName(), target:GetName()))
+            playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.freeze.message"), config:Fetch("admins.prefix"), player:GetName(), target:GetName()))
+        end
+    end
+end)
+
+commands:Register("unfreeze", function(playerid, args, argc, silent)
+    if playerid == -1 then
+        if argc < 1 then return print(string.format(FetchTranslation("admins.unfreeze.syntax"), config:Fetch("admins.prefix"), "sw_")) end
+
+        local targetid = GetPlayerId(args[1])
+        if targetid == -1 then return print(string.format(FetchTranslation("admins.invalid_player"), config:Fetch("admins.prefix"))) end
+
+        local target = GetPlayer(targetid)
+        if not target then return print(string.format(FetchTranslation("admins.player_not_connected"), config:Fetch("admins.prefix"), args[1])) end
+
+        if target:vars():Get("freeze") == 0 then
+            print(string.format(FetchTranslation("admins.player_not_freezed"), config:Fetch("admins.prefix"), "CONSOLE", target:GetName()))
+            playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.player_not_freezed"), config:Fetch("admins.prefix"), "CONSOLE", target:GetName()))
+        else
+            target:vars():Set("freeze", 0)
+            target:SetActualMoveType(MoveType_t.MOVETYPE_WALK)
+            print(string.format(FetchTranslation("admins.unfreeze.message"), config:Fetch("admins.prefix"), "CONSOLE", target:GetName()))
+            playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.unfreeze.message"), config:Fetch("admins.prefix"), "CONSOLE", target:GetName()))
+        end
+    else
+        local player = GetPlayer(playerid)
+        if not player then return end
+
+        if not PlayerHasFlag(player, ADMFLAG_SLAY) then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.no_access"), config:Fetch("admins.prefix"))) end
+        if argc < 1 then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.unfreeze.syntax"), config:Fetch("admins.prefix"), GetPrefix(silent))) end
+
+        local targetid = GetPlayerId(args[1])
+        if targetid == -1 then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.invalid_player"), config:Fetch("admins.prefix"))) end
+
+        local target = GetPlayer(targetid)
+        if not target then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.player_not_connected"), config:Fetch("admins.prefix"), args[1])) end
+
+        if target:vars():Get("admin.immunity") > player:vars():Get("admin.immunity") then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.cannot_use_command"), config:Fetch("admins.prefix"))) end
+
+        if target:vars():Get("freeze") == 0 then
+            print(string.format(FetchTranslation("admins.player_not_freezed"), config:Fetch("admins.prefix"), player:GetName(), target:GetName()))
+            playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.player_not_freezed"), config:Fetch("admins.prefix"), player:GetName(), target:GetName()))
+        else
+            target:vars():Set("freeze", 0)
+            target:SetActualMoveType(MoveType_t.MOVETYPE_WALK)
+            print(string.format(FetchTranslation("admins.unfreeze.message"), config:Fetch("admins.prefix"), player:GetName(), target:GetName()))
+            playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.unfreeze.message"), config:Fetch("admins.prefix"), player:GetName(), target:GetName()))
+        end
+    end
+end)
+
+commands:Register("bury", function(playerid, args, argc, silent)
+    if playerid == -1 then
+        if argc < 1 then return print(string.format(FetchTranslation("admins.bury.syntax"), config:Fetch("admins.prefix"), "sw_")) end
+
+        local targetid = GetPlayerId(args[1])
+        if targetid == -1 then return print(string.format(FetchTranslation("admins.invalid_player"), config:Fetch("admins.prefix"))) end
+
+        local target = GetPlayer(targetid)
+        if not target then return print(string.format(FetchTranslation("admins.player_not_connected"), config:Fetch("admins.prefix"), args[1])) end
+
+        local position = target:coords():Get()
+        
+        target:coords():Set(position + vector3(0, 0, -30))
+
+        print(string.format(FetchTranslation("admins.bury.message"), config:Fetch("admins.prefix"), "CONSOLE", target:GetName()))
+        playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.bury.message"), config:Fetch("admins.prefix"), "CONSOLE", target:GetName()))
+    else
+        player = GetPlayer(playerid)
+        if not player then return end
+
+        if not PlayerHasFlag(player, ADMFLAG_SLAY) then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.no_access"), config:Fetch("admins.prefix"))) end
+
+        if argc < 1 then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.bury.syntax"), config:Fetch("admins.prefix"), GetPrefix(silent))) end
+
+        local targetid = GetPlayerId(args[1])
+        if targetid == -1 then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.invalid_player"), config:Fetch("admins.prefix"))) end
+
+        local target = GetPlayer(targetid)
+        if not target then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.player_not_connected"), config:Fetch("admins.prefix"), args[1])) end
+
+        if target:vars():Get("admin.immunity") > player:vars():Get("admin.immunity") then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.cannot_use_command"), config:Fetch("admins.prefix"))) end
+
+        local position = target:coords():Get()
+        
+        target:coords():Set(position + vector3(0, 0, -30))
+
+        print(string.format(FetchTranslation("admins.bury.message"), config:Fetch("admins.prefix"), player:GetName(), target:GetName()))
+        playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.bury.message"), config:Fetch("admins.prefix"), player:GetName(), target:GetName()))
+    end
+end)
+
+commands:Register("unbury", function(playerid, args, argc, silent)
+    if playerid == -1 then
+        if argc < 1 then return print(string.format(FetchTranslation("admins.unbury.syntax"), config:Fetch("admins.prefix"), "sw_")) end
+
+        local targetid = GetPlayerId(args[1])
+        if targetid == -1 then return print(string.format(FetchTranslation("admins.invalid_player"), config:Fetch("admins.prefix"))) end
+
+        local target = GetPlayer(targetid)
+        if not target then return print(string.format(FetchTranslation("admins.player_not_connected"), config:Fetch("admins.prefix"), args[1])) end
+
+        local position = target:coords():Get()
+        
+        target:coords():Set(position + vector3(0, 0, 10))
+
+        print(string.format(FetchTranslation("admins.unbury.message"), config:Fetch("admins.prefix"), "CONSOLE", target:GetName()))
+        playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.unbury.message"), config:Fetch("admins.prefix"), "CONSOLE", target:GetName()))
+    else
+        player = GetPlayer(playerid)
+        if not player then return end
+
+        if not PlayerHasFlag(player, ADMFLAG_SLAY) then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.no_access"), config:Fetch("admins.prefix"))) end
+
+        if argc < 1 then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.unbury.syntax"), config:Fetch("admins.prefix"), GetPrefix(silent))) end
+
+        local targetid = GetPlayerId(args[1])
+        if targetid == -1 then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.invalid_player"), config:Fetch("admins.prefix"))) end
+
+        local target = GetPlayer(targetid)
+        if not target then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.player_not_connected"), config:Fetch("admins.prefix"), args[1])) end
+
+        if target:vars():Get("admin.immunity") > player:vars():Get("admin.immunity") then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.cannot_use_command"), config:Fetch("admins.prefix"))) end
+
+        local position = target:coords():Get()
+        
+        target:coords():Set(position + vector3(0, 0, 10))
+
+        print(string.format(FetchTranslation("admins.unbury.message"), config:Fetch("admins.prefix"), player:GetName(), target:GetName()))
+        playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.unbury.message"), config:Fetch("admins.prefix"), player:GetName(), target:GetName()))
+    end
+end)
+
+commands:Register("uslap", function(playerid, args, argc, silent)
+    if playerid == -1 then
+        if argc < 1 then return print(string.format(FetchTranslation("admins.uslap.syntax"), config:Fetch("admins.prefix"), "sw_")) end
+
+        local targetid = GetPlayerId(args[1])
+        if targetid == -1 then return print(string.format(FetchTranslation("admins.invalid_player"), config:Fetch("admins.prefix"))) end
+
+        local target = GetPlayer(targetid)
+        if not target then return print(string.format(FetchTranslation("admins.player_not_connected"), config:Fetch("admins.prefix"), args[1])) end
+
+        if argc == 1 then args[2] = "15" end
+
+        local times = tonumber(args[2])
+        if times < 1 or times > 100 then return print(string.format(FetchTranslation("admins.uslap.invalid_times"), config:Fetch("admins.prefix"), 1, 100)) end
+
+        local damage = 0
+        if argc > 2 then
+            damage = tonumber(args[3])
+            if damage < 0 then return print(string.format(FetchTranslation("admins.uslap.invalid_damage"), config:Fetch("admins.prefix"))) end
+        end
+
+        for i = 1, times do
+            SetTimeout(i * 250, function()
+
+                local vel = target:velocity():Get()
+                vel.x = vel.x + math.random(50, 230) * (math.random(0, 1) == 1 and -1 or 1)
+                vel.y = vel.y + math.random(50, 230) * (math.random(0, 1) == 1 and -1 or 1)
+                vel.z = vel.z + math.random(100, 300)
+        
+                target:velocity():Set(vel)
+
+                target:health():Set(target:health():Get() - damage)
+                if target:health():Get() <= 0 then
+                    target:Kill()
+                end
+            end)
+        end
+
+        print(string.format(FetchTranslation("admins.uslap.message"), config:Fetch("admins.prefix"), "CONSOLE", target:GetName(), times, damage))
+        playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.uslap.message"), config:Fetch("admins.prefix"), "CONSOLE", target:GetName(), times, damage))
+    else
+        local player = GetPlayer(playerid)
+        if not player then return end
+
+        if not PlayerHasFlag(player, ADMFLAG_SLAY) then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.no_access"), config:Fetch("admins.prefix"))) end
+        if argc < 1 then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.uslap.syntax"), config:Fetch("admins.prefix"), GetPrefix(silent))) end
+
+        local targetid = GetPlayerId(args[1])
+        if targetid == -1 then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.invalid_player"), config:Fetch("admins.prefix"))) end
+
+        local target = GetPlayer(targetid)
+        if not target then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.player_not_connected"), config:Fetch("admins.prefix"), args[1])) end
+        
+        if target:vars():Get("admin.immunity") > player:vars():Get("admin.immunity") then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.cannot_use_command"), config:Fetch("admins.prefix"))) end
+        
+        if argc == 1 then args[2] = "15" end
+
+        local times = tonumber(args[2])
+        if times < 1 or times > 100 then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.uslap.invalid_times"), config:Fetch("admins.prefix"), 1, 100)) end
+
+        local damage = 0
+        if argc > 2 then
+            damage = tonumber(args[3])
+            if damage < 0 then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.uslap.invalid_damage"), config:Fetch("admins.prefix"))) end
+        end
+
+        for i = 1, times do
+            SetTimeout(i * 250, function()
+
+                local vel = target:velocity():Get()
+                vel.x = vel.x + math.random(50, 230) * (math.random(0, 1) == 1 and -1 or 1)
+                vel.y = vel.y + math.random(50, 230) * (math.random(0, 1) == 1 and -1 or 1)
+                vel.z = vel.z + math.random(100, 300)
+        
+                target:velocity():Set(vel)
+
+                target:health():Set(target:health():Get() - damage)
+                if target:health():Get() <= 0 then
+                    target:Kill()
+                end
+            end)
+        end
+
+        print(string.format(FetchTranslation("admins.uslap.message"), config:Fetch("admins.prefix"), player:GetName(), target:GetName(), times, damage))
+        playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.uslap.message"), config:Fetch("admins.prefix"), player:GetName(), target:GetName(), times, damage))
+    end
+end)
+
+commands:Register("rename", function(playerid, args, argc, silent)
+    if playerid == -1 then
+        if argc < 2 then return print(string.format(FetchTranslation("admins.rename.syntax"), config:Fetch("admins.prefix"), "sw_", "NewName")) end
+
+        local targetid = GetPlayerId(args[1])
+        if targetid == -1 then return print(string.format(FetchTranslation("admins.invalid_player"), config:Fetch("admins.prefix"))) end
+
+        local target = GetPlayer(targetid)
+        if not target then return print(string.format(FetchTranslation("admins.player_not_connected"), config:Fetch("admins.prefix"), args[1])) end
+
+        local name = args[2]
+        if name == target:GetName() then return print(string.format(FetchTranslation("admins.rename.same_name"), config:Fetch("admins.prefix"), target:GetName())) end
+
+        target:SetName(name)
+
+        print(string.format(FetchTranslation("admins.rename.message"), config:Fetch("admins.prefix"), "CONSOLE", args[1], name))
+        playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.rename.message"), config:Fetch("admins.prefix"), "CONSOLE", args[1], name))
+    else
+        local player = GetPlayer(playerid)
+        if not player then return end
+
+        if not PlayerHasFlag(player, ADMFLAG_CHAT) then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.no_access"), config:Fetch("admins.prefix"))) end
+        if argc < 2 then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.rename.syntax"), config:Fetch("admins.prefix"), GetPrefix(silent), "NewName")) end
+
+        local targetid = GetPlayerId(args[1])
+        if targetid == -1 then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.invalid_player"), config:Fetch("admins.prefix"))) end
+
+        local target = GetPlayer(targetid)
+        if not target then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.player_not_connected"), config:Fetch("admins.prefix"), args[1])) end
+        
+        if target:vars():Get("admin.immunity") > player:vars():Get("admin.immunity") then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.cannot_use_command"), config:Fetch("admins.prefix"))) end
+
+        local name = args[2]
+
+        target:SetName(name)
+
+        print(string.format(FetchTranslation("admins.rename.message"), config:Fetch("admins.prefix"), player:GetName(), args[1], name))
+        playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.rename.message"), config:Fetch("admins.prefix"), player:GetName(), args[1], name))
+    end
 end)

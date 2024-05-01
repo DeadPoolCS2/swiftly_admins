@@ -49,3 +49,38 @@ events:on("ShouldHearVoice", function(playerid)
     
     return (player:vars():Get("sanctions.ismuted") == 0)
 end)
+
+events:on("OnPlayerDamage", function(playerid, damage, damagetype, bullettype, damageflags)
+    local player = GetPlayer(playerid)
+    if not player then return true end
+
+    if player:vars():Get("godmode") == 1 then
+        return false
+    end
+    return true
+end)
+
+events:on("OnPlayerSpawn", function(playerid)
+    local player = GetPlayer(playerid)
+    if not player then return end
+
+    if player:vars():Get("godmode") == 1 then
+        player:vars():Set("godmode", 0)
+    end
+
+    if player:vars():Get("noclip") == 1 then
+        player:vars():Set("noclip", 0)
+    end
+
+    if player:vars():Get("freeze") == 1 then
+        player:vars():Set("freeze", 0)
+    end
+end)
+
+events:on("OnPlayerDeath", function(playerid)
+    local player = GetPlayer(playerid)
+    if not player then return end
+
+    local position = player:coords():Get()
+    player:vars():Set("deathposition", tostring(position))
+end)
