@@ -52,11 +52,12 @@ end)
 
 events:on("OnPlayerDamage", function(playerid, damage, damagetype, bullettype, damageflags)
     local player = GetPlayer(playerid)
-    if not player then return end
+    if not player then return true end
 
     if player:vars():Get("godmode") == 1 then
         return false
     end
+    return true
 end)
 
 events:on("OnPlayerSpawn", function(playerid)
