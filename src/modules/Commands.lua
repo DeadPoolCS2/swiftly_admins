@@ -1494,21 +1494,7 @@ commands:Register("tele", function(playerid, args, argc, silent)
 end)
 
 commands:Register("bring", function(playerid, args, argc, silent)
-    if playerid == -1 then
-        if argc < 1 then return print(string.format(FetchTranslation("admins.bring.syntax"), config:Fetch("admins.prefix"), "sw_")) end
-
-        local targetid = GetPlayerId(args[1])
-        if targetid == -1 then return print(string.format(FetchTranslation("admins.invalid_player"), config:Fetch("admins.prefix"))) end
-
-        local target = GetPlayer(targetid)
-        if not target then return print(string.format(FetchTranslation("admins.player_not_connected"), config:Fetch("admins.prefix"), args[1])) end
-
-        local position = GetPlayer(playerid):coords():Get()
-        
-        target:coords():Set(position + vector3(0, 0, 100))
-
-        print(string.format(FetchTranslation("admins.bring.message"), config:Fetch("admins.prefix"), "CONSOLE", target:GetName()))
-        playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.bring.message"), config:Fetch("admins.prefix"), "CONSOLE", target:GetName()))
+    if playerid == -1 then return end
     else
         local player = GetPlayer(playerid)
         if not player then return end
@@ -1535,8 +1521,7 @@ commands:Register("bring", function(playerid, args, argc, silent)
 end)
 
 commands:Register("goto", function(playerid, args, argc, silent)
-    if playerid == -1 then
-        -- server logic
+    if playerid == -1 then return end
     else
         local player = GetPlayer(playerid)
         if not player then return end
@@ -1557,8 +1542,8 @@ commands:Register("goto", function(playerid, args, argc, silent)
 
         player:coords():Set(position + vector3(0, 0, 100))
 
-        print(string.format(FetchTranslation("admins.goto.message"), config:Fetch("admins.prefix"), player:GetName(), GetPlayer(playerid):GetName(), target:GetName()))
-        playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.goto.message"), config:Fetch("admins.prefix"), player:GetName(), GetPlayer(playerid):GetName(), target:GetName()))
+        print(string.format(FetchTranslation("admins.goto.message"), config:Fetch("admins.prefix"), player:GetName(), target:GetName()))
+        playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.goto.message"), config:Fetch("admins.prefix"), player:GetName(), target:GetName()))
     end
 end)
 
