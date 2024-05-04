@@ -1463,7 +1463,7 @@ commands:Register("tele", function(playerid, args, argc, silent)
         print(string.format(FetchTranslation("admins.tele.message"), config:Fetch("admins.prefix"), "CONSOLE", target_A:GetName(), target_B:GetName()))
         playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.tele.message"), config:Fetch("admins.prefix"), "CONSOLE", target_A:GetName(), target_B:GetName()))
     else
-        player = GetPlayer(playerid)
+        local player = GetPlayer(playerid)
         if not player then return end
 
         if not PlayerHasFlag(player, ADMFLAG_KICK) then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.no_access"), config:Fetch("admins.prefix"))) end
@@ -1510,7 +1510,7 @@ commands:Register("bring", function(playerid, args, argc, silent)
         print(string.format(FetchTranslation("admins.bring.message"), config:Fetch("admins.prefix"), "CONSOLE", target:GetName()))
         playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.bring.message"), config:Fetch("admins.prefix"), "CONSOLE", target:GetName()))
     else
-        player = GetPlayer(playerid)
+        local player = GetPlayer(playerid)
         if not player then return end
 
         if not PlayerHasFlag(player, ADMFLAG_KICK) then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.no_access"), config:Fetch("admins.prefix"))) end
@@ -1536,22 +1536,9 @@ end)
 
 commands:Register("goto", function(playerid, args, argc, silent)
     if playerid == -1 then
-        if argc < 1 then return print(string.format(FetchTranslation("admins.goto.syntax"), config:Fetch("admins.prefix"), "sw_")) end
-
-        local targetid = GetPlayerId(args[1])
-        if targetid == -1 then return print(string.format(FetchTranslation("admins.invalid_player"), config:Fetch("admins.prefix"))) end
-
-        local target = GetPlayer(targetid)
-        if not target then return print(string.format(FetchTranslation("admins.player_not_connected"), config:Fetch("admins.prefix"), args[1])) end
-
-        local position = target:coords():Get()
-        
-        GetPlayer(playerid):coords():Set(position + vector3(0, 0, 100))
-
-        print(string.format(FetchTranslation("admins.goto.message"), config:Fetch("admins.prefix"), "CONSOLE", GetPlayer(playerid):GetName(), target:GetName()))
-        playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.goto.message"), config:Fetch("admins.prefix"), "CONSOLE", GetPlayer(playerid):GetName(), target:GetName()))
+        -- server logic
     else
-        player = GetPlayer(playerid)
+        local player = GetPlayer(playerid)
         if not player then return end
 
         if not PlayerHasFlag(player, ADMFLAG_KICK) then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.no_access"), config:Fetch("admins.prefix"))) end
@@ -1734,7 +1721,7 @@ commands:Register("bury", function(playerid, args, argc, silent)
         print(string.format(FetchTranslation("admins.bury.message"), config:Fetch("admins.prefix"), "CONSOLE", target:GetName()))
         playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.bury.message"), config:Fetch("admins.prefix"), "CONSOLE", target:GetName()))
     else
-        player = GetPlayer(playerid)
+        local player = GetPlayer(playerid)
         if not player then return end
 
         if not PlayerHasFlag(player, ADMFLAG_SLAY) then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.no_access"), config:Fetch("admins.prefix"))) end
@@ -1775,7 +1762,7 @@ commands:Register("unbury", function(playerid, args, argc, silent)
         print(string.format(FetchTranslation("admins.unbury.message"), config:Fetch("admins.prefix"), "CONSOLE", target:GetName()))
         playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.unbury.message"), config:Fetch("admins.prefix"), "CONSOLE", target:GetName()))
     else
-        player = GetPlayer(playerid)
+        local player = GetPlayer(playerid)
         if not player then return end
 
         if not PlayerHasFlag(player, ADMFLAG_SLAY) then return player:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.no_access"), config:Fetch("admins.prefix"))) end
