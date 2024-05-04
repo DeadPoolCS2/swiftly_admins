@@ -1505,7 +1505,7 @@ commands:Register("bring", function(playerid, args, argc, silent)
 
         local position = GetPlayer(playerid):coords():Get()
         
-        target:coords():Set(position + vector3(0, 0, 300))
+        target:coords():Set(position + vector3(0, 0, 100))
 
         print(string.format(FetchTranslation("admins.bring.message"), config:Fetch("admins.prefix"), "CONSOLE", target:GetName()))
         playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.bring.message"), config:Fetch("admins.prefix"), "CONSOLE", target:GetName()))
@@ -1527,7 +1527,7 @@ commands:Register("bring", function(playerid, args, argc, silent)
 
         local position = player:coords():Get()
         
-        target:coords():Set(position + vector3(0, 0, 300))
+        target:coords():Set(position + vector3(0, 0, 100))
 
         print(string.format(FetchTranslation("admins.bring.message"), config:Fetch("admins.prefix"), player:GetName(), target:GetName()))
         playermanager:SendMsg(MessageType.Chat, string.format(FetchTranslation("admins.bring.message"), config:Fetch("admins.prefix"), player:GetName(), target:GetName()))
